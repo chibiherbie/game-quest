@@ -47,4 +47,3 @@ function para(e) {
         bg[index].style.transform = 'translate(-' + x * 20 + 'px, -' + y * 20 + 'px)';
     }
 }
-

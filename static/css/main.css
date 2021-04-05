@@ -4,9 +4,17 @@
     outline: none;
 }
 
+::-webkit-scrollbar { /* chrome based */
+    width: 0px;  /* ширина scrollbar'a */
+    background: transparent;  /* опционально */
+}
+
 body, html {
     width: 100%;
     height: 100%;
+
+    -ms-overflow-style: none;  /* IE 10+ */
+    scrollbar-width: none; /* Firefox */
 }
 
 a {
@@ -42,6 +50,7 @@ a {
 .img-parallax {
 	overflow: hidden;
 }
+
 .mouse-parallax-bg {
 	position: absolute;
 	background-position: center center;
@@ -66,7 +75,7 @@ a {
 }
 
 .header-text {
-    font-size: 20vw;
+    font-size: 18vw;
     color: white;
     font-family: 'Bebas Neue', cursive; 
     z-index: 500;
@@ -77,6 +86,7 @@ a {
 
 .header-text._active {
     opacity: 1;
+    font-size: 20vw;
 }
 
 /* /header */
@@ -84,5 +94,9 @@ a {
 /* main */
 
 .main {
-    background-color: gray;
+    background-color: #0d0d0d;
+    height: 90%;
+}
+.main-2 {
+
 }
