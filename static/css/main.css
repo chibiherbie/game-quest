@@ -26,76 +26,63 @@ a {
 .header {
     height: 100%;
     width: 100%;
-    background-color: gray;
-    
-    align-items: center;
-    background-position: 50% 0;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: #0d0d0d;
 }
 
 .container {
+    display: flex;
     width: 1175px;
-    height: 84px;
+    height: 100%;
     margin: 0 auto;
+    justify-content: center;
     color: rgb(255, 255, 255);
-}
-
-.nav {
-    width: 1175px;
-    padding-top: 33px;
-    background: transparent;
-    position: fixed;
-    display: flex;
-    justify-content: space-between;
-    z-index: 5000;
-}
-
-.top-nav {
-    padding-top: 10px;
-    height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: top;
-    border-bottom: 5px solid white;
-}
-
-.top-nav__first {
-    display: flex;  
-    justify-content: space-between;
     align-items: center;
-    width: 225px;
-    height: 40px;
 }
 
-.top-nav__second {
-    font-size: 23px;
-    line-height: 1.739;
-    margin-left: 30px;
-    cursor: pointer;
+.img-parallax {
+	overflow: hidden;
+}
+.mouse-parallax-bg {
+	position: absolute;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 8%;
+	height: 8%;
+	transition: all 0.1s ease;  
+    z-index: 100;
+    top: 1000px;
 }
 
-.top-nav__link {
-    margin-top: 7px;
+#img1 {
+    background-image: url("../img/hat.png");
+    left: 50px;
 }
 
-.top-nav__link:hover {
-    opacity: 60%;
+#img2 {
+    background-image: url("../img/glass.png");    
+    right: 180px;
+    top: 500px;
 }
 
-#text {
+.header-text {
+    font-size: 20vw;
     color: white;
+    font-family: 'Bebas Neue', cursive; 
+    z-index: 500;
+
+    opacity: 0;
+    transition: all 1s ease 0s;
 }
 
-#text:hover {
-    opacity: 60%;
-}
-
-.top-nav__word {
-    font-size: 17px;
-    line-height: 0.941;
-    width: 71%;
-    letter-spacing: 0.8px;
+.header-text._active {
+    opacity: 1;
 }
 
 /* /header */
+
+/* main */
+
+.main {
+    background-color: gray;
+}
