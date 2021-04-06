@@ -1,3 +1,5 @@
+//------ появление объектов при скролле -------
+
 let animItems = document.querySelectorAll('._anim-items');
 
 if (animItems.length > 0) {
@@ -36,6 +38,10 @@ if (animItems.length > 0) {
     }, 300);
 }
 
+// ------------------
+
+// -----parallax-----
+
 let bg = document.querySelectorAll('.mouse-parallax-bg');
 
 window.addEventListener('mousemove', para)
@@ -47,3 +53,24 @@ function para(e) {
         bg[index].style.transform = 'translate(-' + x * 20 + 'px, -' + y * 20 + 'px)';
     }
 }
+
+//------------------
+
+// -----движение объектов-----
+
+// function positionTheDot() {
+
+
+//     var cScroll = this.scrolTop,
+//     p = cScroll * maxHP,
+//     y = maxHP - p * 10,
+//     x = maxHP;
+//     path.offsetTop = y
+//     path.offsetLeft = x
+//   };
+
+// var path = document.querySelector(".header-text"),
+//  winHP = window.innerHeight / 100,
+//  maxHP = 100 / (document.innerHeight - window.innerHeight + path.innerHeight * 2);
+
+// window.addEventListener('scroll', positionTheDot);
