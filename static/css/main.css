@@ -48,30 +48,34 @@ a {
 }
 
 .img-parallax {
-	overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+    transition: all 3s ease 0.2s;
+}
+
+.img-parallax._active {
+    opacity: 1;
 }
 
 .mouse-parallax-bg {
 	position: absolute;
-	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	width: 8%;
-	height: 8%;
+    background-size: 100vw;
 	transition: all 0.1s ease;  
     z-index: 100;
-    top: 1000px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../img/items.png");
 }
 
-#img1 {
-    background-image: url("../img/hat.png");
-    left: 50px;
-}
-
-#img2 {
-    background-image: url("../img/glass.png");    
-    right: 180px;
-    top: 500px;
+.img-parallax._active {
+    opacity: 1;
 }
 
 .header-text {
@@ -93,10 +97,7 @@ a {
 
 /* main */
 
-.main {
+.transition {
     background-color: #0d0d0d;
-    height: 90%;
-}
-.main-2 {
-
+    height: 110%;
 }

@@ -18,9 +18,9 @@ if (animItems.length > 0) {
             if((pageYOffset > animItemOffset - animItemPoint) && pageYOffset < (animItemOffset + animItemHeight)) {
                 animItem.classList.add('_active')
             }
-            else {
-                animItems.classList.remove('_active')
-            }
+            // else {
+            //     animItem.classList.remove('_active')
+            // }
         }
     }
 
