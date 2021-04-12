@@ -229,7 +229,6 @@ a {
 /* container-video */
 
 .container-video {
-    height: 1000px;
     padding-top: 50px;
 }
 
@@ -237,7 +236,7 @@ a {
     display: flex;
     justify-content: center;
     position: relative;
-    padding-bottom: 56.25%; /* задаёт высоту контейнера для 16:9 (если 4:3 — поставьте 75%) */
+    padding-bottom: 56%; /* задаёт высоту контейнера для 16:9 (если 4:3 — поставьте 75%) */
     height: 0;
     overflow: hidden;
   }
@@ -260,6 +259,78 @@ a {
     height: 1000px;
 }
 
+.schedule-header {
+    text-align: center;
+    font-size: 3rem;
+    padding-bottom: 40px;
+}
 
+.schedule-tab {
+    float: left;
+    width: 200px;
+    display: inline-flex;
+}
+
+.header_line {
+    box-sizing: inherit;
+    height: 66px;
+    background: #262626;
+    padding: 5px;
+    margin-bottom: 2px;
+    width: 200px;
+}
+
+.header_line h3 {
+    font-size: 20px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.header_line p {
+    font-size: 80%;
+    margin: 5px 0 0;
+}
+
+.schedule-tab_body {
+    position: relative;
+    width: 100%;
+}
+
+.scroller {
+    overflow-x: scroll;
+    min-width: 1000px;
+    width: 100%;
+}
+
+.schedule-line {
+    padding-bottom: 2px;
+    margin-right: 20px;
+}
+
+.schedule-quest {
+   position: relative;
+   height: 66px;
+   margin-bottom: 2px;
+   padding: 10px 0;
+}
+
+.quest-timeslots {
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    height: 31px;
+    width: 100%;
+}
+
+.slot {
+    background-color: #26262615;
+    border: 1px solid #262626;
+    border-radius: 20px;
+    cursor: default;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 /* /container-schedule */
