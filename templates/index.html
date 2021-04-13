@@ -52,80 +52,29 @@
           <iframe width="1920" height="1080" src="https://www.youtube.com/embed/ohNW59n7ovk" frameborder="0" allowfullscreen title="ТЕРЙЛЕР"></iframe>
         </div>
         <div class="container-schedule">  
-          <h2 class="schedule-header _anim-items">ДАТА</h2>
+          <h2 class="schedule-header _anim-items">{{ params['now_date'] }} - {{ params['week_date'] }}</h2>
           <div class="schedule-tab">
             <div class="mobile-table">
             <table class="schedule-table">
               <thead>
                 <tr>
-                  <th>пн</th>
-                  <th>вт</th>
-                  <th>ср</th>
-                  <th>чт</th>
-                  <th>пт</th>
-                  <th>сб</th>
-                  <th>вс</th>
+                    {% for i in params['days'] %}
+                    <th>{{i}}</th>
+                    {% endfor %}
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>12:00</td>
-                  <td>13:00</td> 
-                  <td>14:00</td>
-                  <td>15:00</td>
-                  <td>16:00</td>
-                  <td>17:00</td>
-                  <td>18:00</td>
-                </tr>
-                <tr>
-                  <td>12:00</td>
-                  <td>13:00</td> 
-                  <td>14:00</td>
-                  <td>15:00</td>
-                  <td>16:00</td>
-                  <td>17:00</td>
-                  <td>18:00</td>
-                </tr><tr>
-                  <td>12:00</td>
-                  <td>13:00</td> 
-                  <td>14:00</td>
-                  <td>15:00</td>
-                  <td>16:00</td>
-                  <td>17:00</td>
-                  <td>18:00</td>
-                </tr><tr>
-                  <td>12:00</td>
-                  <td>13:00</td> 
-                  <td>14:00</td>
-                  <td>15:00</td>
-                  <td>16:00</td>
-                  <td>17:00</td>
-                  <td>18:00</td>
-                </tr><tr>
-                  <td>12:00</td>
-                  <td>13:00</td> 
-                  <td>14:00</td>
-                  <td>15:00</td>
-                  <td>16:00</td>
-                  <td>17:00</td>
-                  <td>18:00</td>
-                </tr><tr>
-                  <td>12:00</td>
-                  <td>13:00</td> 
-                  <td>14:00</td>
-                  <td>15:00</td>
-                  <td>16:00</td>
-                  <td>17:00</td>
-                  <td>18:00</td>
-                </tr><tr>
-                  <td>12:00</td>
-                  <td>13:00</td> 
-                  <td>14:00</td>
-                  <td>15:00</td>
-                  <td>16:00</td>
-                  <td>17:00</td>
-                  <td>18:00</td>
-                </tr>
+                {% for i in range(7) %}
+                    <tr>
+                      <td>12:00</td>
+                      <td>13:00</td>
+                      <td>14:00</td>
+                      <td>15:00</td>
+                      <td>16:00</td>
+                      <td>17:00</td>
+                      <td>18:00</td>
+                    </tr>
+                {% endfor %}
               </tbody>
             </table>
             </div>

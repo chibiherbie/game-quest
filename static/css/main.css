@@ -303,7 +303,6 @@ table.schedule-table {
     border-collapse: collapse;
     width: 100%;
     text-align: center;
-    
 }
 
 table.schedule-table th {
@@ -316,6 +315,7 @@ table.schedule-table th:first-child {
     border-top-left-radius: 50px;
     border: 0;
 }
+
 table.schedule-table th:last-child {
     border-top-right-radius: 50px;
     border: 0;
@@ -324,7 +324,6 @@ table.schedule-table th:last-child {
 table.schedule-table td {
     font-size: 17px;
     background-color: #2626261a;
-    
 }
 
 table.schedule-table td, table.schedule-table th {
