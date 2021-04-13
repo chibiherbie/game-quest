@@ -54,6 +54,34 @@ function para(e) {
     }
 }
 
+
+// Объявить переменную модального окна в текущей области видимости
+var modal = document.getElementById('myModal');
+
+// Переменная кнопки, открывающей модальное окно
+let btns = document.querySelectorAll(".myBtn");
+
+// Получение элемента <span>, который закрывает модальное окно
+var span = document.getElementsByClassName("close")[0];
+
+// Когда пользователь нажимает кнопку, открывается pop-up форма 
+for (let btn of btns) {
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+}
+// Когда пользователь нажимает кнопку (x) <span>, закрывается окно формы
+span.onclick = function() {
+    modal.style.display = "none";
+}
+// Когда пользователь нажимает в любое место вне формы, закрыть окно формы
+window.onclick = function(event) {
+    if (event.target == modal) {
+    modal.style.display = "none";
+    }
+}
+
+
 //------------------
 
 // -----движение объектов-----

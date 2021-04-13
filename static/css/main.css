@@ -416,3 +416,44 @@ ul li:hover .fa-instagram {
 }
 
 /* /container-footer */
+
+
+/* pop */
+
+/* Фон за формой */
+.modal {
+    display: none; /* Модальное окно скрыто по умолчанию */
+    position: fixed; /* Фикс. Позиция на главной странице */
+    z-index: 1; /* Отображение на заднем плане */
+    left: 0;
+    top: 0;
+    width: 100%; /* 100% по ширине */
+    height: 100%; /* 100% по высоте */
+    overflow: auto; /* Включить прокрутку, если необходимо */
+    background-color: red; 
+    background-color: rgba(0,0,0,0.4); 
+}
+/* Содержание модального окна*/
+.modal-content {
+    background-color: red;
+    margin: 15% auto; /* 15% от верха и центрировано */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Может быть больше и меньше, зависит от размеров экрана */
+    box-shadow: 5px 10px 5px #666; /*Добавить тень */
+}
+/* Основные свойства кнопки «Закрыть» */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+/* Свойства кнопки «Закрыть», когда вы наводите на нее курсор или взаимодействуете с ней */
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
