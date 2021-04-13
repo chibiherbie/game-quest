@@ -323,3 +323,70 @@ table.schedule-table tr:hover td {
 }
 
 /* /container-schedule */
+
+
+
+/* container-footer */
+
+footer {
+    background-color: #2626261a;
+}
+
+.container-footer {
+    display: flex;
+    justify-content: space-around;
+    width: 1175px;
+    margin: 0 auto;
+    height: 200px;
+    align-items: center;
+}
+
+.footer-sociable {
+    display: flex;
+    justify-content: space-around;
+}
+
+ul {
+    list-style: none;
+
+}
+  
+ul li {
+    float: left;
+    width: 65px;
+    height: 50px;
+    margin-right: 36px;
+    border-radius: 25px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.5s linear;
+}
+
+ul li:last-child {
+    margin-right: 0;
+}
+  
+ul li .fa {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: #fff;
+    font-size: 30px;
+    transition: all 0.5s linear;
+}
+  
+ul li:hover {
+    background: #262626;
+    box-shadow: 0 0 30px 3px #262626;
+}
+
+ul li:hover .fa-vk {
+    color: #2f4fff;
+}
+
+ul li:hover .fa-instagram {
+    color: rgb(231, 101, 248);
+}
+
+/* /container-footer */
