@@ -197,13 +197,13 @@ a {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 1600px;
+    height: 1250px;
     padding-bottom: 150px;
 }
 
-.img-map{
+.img-map {
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-size: 100%;
     background-position: center center;
     background-image: url(../img/map.png);
     z-index: 100;
@@ -218,9 +218,16 @@ a {
     margin: 0 auto;
     width: 50%;
     z-index: 500;
-    font-size: 4vw;
+    font-size: 3vw;
     text-shadow: 10px 10px 25px #0d0d0d,
                 -10px -10px 50px #0d0d0d;
+
+    opacity: 0;
+    transition: all 2s ease 0s;
+}
+
+.map-text._active {
+    opacity: 1;
 }
 
 
@@ -239,16 +246,27 @@ a {
     padding-bottom: 56%; /* задаёт высоту контейнера для 16:9 (если 4:3 — поставьте 75%) */
     height: 0;
     overflow: hidden;
+
+    opacity: 0;
+    transform: translate(0px, 50px);
+    transition: all 2s ease 0s;
   }
 
 .container-video iframe {
     position: absolute;
     border-radius: 50px;
+    top: 80px;
     width: 70%;
     height: 70%;
     border-width: 0;
     outline-width: 0;
     box-shadow: 10px 10px 5px #262626;
+}
+
+.container-video._active {
+    opacity: 1;
+    transform: translate(0px, 0px);
+
 }
 
 /* /contaainer-video */
@@ -263,6 +281,15 @@ a {
     text-align: center;
     font-size: 3rem;
     padding-bottom: 50px;
+
+    opacity: 0;
+    transition: all 1s ease 0s;
+    transform: translate(0px, 40px);
+}
+
+.schedule-header._active {
+    opacity: 1;
+    transform: translate(0px, 0px);
 }
 
 .schedule-tab {
@@ -382,11 +409,11 @@ ul li:hover {
 }
 
 ul li:hover .fa-vk {
-    color: #2f4fff;
+    color: #5282b8;
 }
 
 ul li:hover .fa-instagram {
-    color: rgb(231, 101, 248);
+    color: #ce3094;
 }
 
 /* /container-footer */
