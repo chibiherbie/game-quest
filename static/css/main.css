@@ -448,10 +448,31 @@ ul li:hover .fa-instagram {
     margin: 5% auto; /* 15% от верха и центрировано */
     padding: 20px;
     border: 1px solid #f2f2f2;
-    width: 60%;
+    width: 80%;
     height: 80%;
     box-shadow: 5px 15px 50px black,
                 -5px -15px 50px black;
+}
+
+.container-form {
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+}
+
+.container-form p {
+    padding-top: 5px;
+}
+
+.container-form p label {
+    padding-bottom: 5px;
+}
+
+form {
+    width: 100%;
 }
 
 .close {
@@ -464,7 +485,7 @@ ul li:hover .fa-instagram {
 
 .close:hover,
 .close:focus {
-    color: #181818;
+    color: #888888;
     text-decoration: none;
     cursor: pointer;
 }
@@ -504,6 +525,50 @@ ul li:hover .fa-instagram {
 	animation-name: fadeOut;
 	opacity: 0;
 	visibility: hidden;
+}
+
+
+form label {
+    color: #f2f2f2
+}
+
+.form-time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+.form-date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 45px;
+}
+
+.form-control {
+    color: #262626;
+    background-color: #f2f2f2;
+
+}
+
+.form-control option {
+    color: #262626;
+}
+
+.btn-primary {
+    background-color: transparent;
+    border-color: #f2f2f2;
+}
+
+.btn-primary:hover {
+    color: #262626;
+    background-color: #f2f2f2;
+    border-color: #f2f2f2;
+}
+
+#dt_start {
+    display: none;
 }
 
 /* /pop-up */

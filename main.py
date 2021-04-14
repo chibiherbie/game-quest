@@ -1,8 +1,11 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 from _data import db_session
+from forms.user import BookingForm
+from _data.users import User
 import os
 import datetime as dt
 import locale
+from random import choice
 
 
 app = Flask(__name__)
@@ -11,15 +14,46 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 locale.setlocale(locale.LC_ALL, "ru")  # задаем локально для вывода даты на русском
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
     params = {}
     params['now_date'] = dt.date.today().strftime("%d %B")
     params['week_date'] = (dt.date.today() + dt.timedelta(weeks=1)).strftime("%d %B")
     params['days'] = [(dt.date.today() + dt.timedelta(days=i)).strftime('%d %B %A').split() for i in range(7)]
+    form = BookingForm()
+    if form.validate_on_submit():
+        # if form.password.data != form.password_again.data:
+        #     return render_template('register.html', title='Регистрация',
+        #                            form=form,
+        #                            message="Пароли не совпадают")
+        db_sess = db_session.create_session()
+        # if db_sess.query(User).filter(User.email == form.email.data).first():
+        #     return render_template('register.html', title='Регистрация',
+        #                            form=form,
+        #                            message="Такой пользователь уже есть")
+        url = genereta_url()
+        user = User(
+            name=form.name.data,
+            email=form.email.data,
+            address=form.address.data,
+            dt_start=form.dt_start.data,
+            url=url
+        )
+        db_sess.add(user)
+        db_sess.commit()
 
-    form = ''
+        return redirect('/')
     return render_template('index.html', params=params, form=form)
+
+
+def genereta_url():
+    while True:
+        url = ''.join([choice('qwertyuiopasdfghjklzxcvbnm') for _ in range(10)])
+        db_sess = db_session.create_session()
+        if db_sess.query(User).filter(User.url == url).first():
+            continue
+        break
+    return url
 
 
 def main():

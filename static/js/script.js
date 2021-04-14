@@ -91,6 +91,11 @@ window.onclick = function(event) {
 
 //------------------
 
+var cells = Array.prototype.slice.call(document.getElementsByClassName("schedule-table")[0].getElementsByTagName("td"));
+for(var i in cells){
+    console.log("My contents is \"" + cells[i].innerHTML + "\"");
+}
+
 // -----движение объектов-----
 
 // function positionTheDot() {
