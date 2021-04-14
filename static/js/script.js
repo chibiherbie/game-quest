@@ -54,7 +54,9 @@ function para(e) {
     }
 }
 
+//-----------------
 
+// -----POP-UP------
 // Объявить переменную модального окна в текущей области видимости
 var modal = document.getElementById('myModal');
 
@@ -68,19 +70,24 @@ var span = document.getElementsByClassName("close")[0];
 for (let btn of btns) {
     btn.onclick = function() {
         modal.style.display = "block";
+        modal.classList.remove('fadeOut')
+        modal.classList.add('fadeIn')
     }
 }
 // Когда пользователь нажимает кнопку (x) <span>, закрывается окно формы
 span.onclick = function() {
-    modal.style.display = "none";
+
+    modal.classList.remove('fadeIn')
+    modal.classList.add('fadeOut')
 }
 // Когда пользователь нажимает в любое место вне формы, закрыть окно формы
 window.onclick = function(event) {
     if (event.target == modal) {
-    modal.style.display = "none";
+
+    modal.classList.remove('fadeIn')
+    modal.classList.add('fadeOut')
     }
 }
-
 
 //------------------
 

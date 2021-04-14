@@ -14,9 +14,10 @@ def index():
     params = {}
     params['now_date'] = dt.date.today().strftime("%d %B")
     params['week_date'] = (dt.date.today() + dt.timedelta(weeks=1)).strftime("%d %B")
-    params['days'] = [(dt.date.today() + dt.timedelta(days=i)).strftime('%d %B %A') for i in range(7)]
+    params['days'] = [(dt.date.today() + dt.timedelta(days=i)).strftime('%d %B %A').split() for i in range(7)]
 
-    return render_template('index.html', params=params)
+    form = ''
+    return render_template('index.html', params=params, form=form)
 
 
 if __name__ == '__main__':
