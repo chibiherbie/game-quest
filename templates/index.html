@@ -65,14 +65,15 @@
               </thead>
               <tbody>
                 {% for time in ['11:00', '12:30', '14:00', '15:30', '17:00', '18:30', '20:00'] %}
+                    {% set dt = time + ' ' %}
                     <tr>
-                      <td class='myBtn' data-time="{{ time }}" data-date="{{ ' '.join(params['days'][loop.index0]).lower() }}">{{ time }}</td>
-                      <td class='myBtn' data-time="{{ time }}" data-date="{{ ' '.join(params['days'][loop.index0]).lower() }}">{{ time }}</td>
-                      <td class="myBtn" data-time="{{ time }}" data-date="{{ ' '.join(params['days'][loop.index0]).lower() }}">{{ time }}</td>
-                      <td class='myBtn' data-time="{{ time }}" data-date="{{ ' '.join(params['days'][loop.index0]).lower() }}">{{ time }}</td>
-                      <td class='myBtn' data-time="{{ time }}" data-date="{{ ' '.join(params['days'][loop.index0]).lower() }}">{{ time }}</td>
-                      <td class='myBtn' data-time="{{ time }}" data-date="{{ ' '.join(params['days'][loop.index0]).lower() }}">{{ time }}</td>
-                      <td class="myBtn" data-time="{{ time }}" data-date="{{ ' '.join(params['days'][loop.index0]).lower() }}">{{ time }}</td>
+                      <td class='{% if dt + " ".join(params["days"][0]).lower() in params["booking"] %}book{% else %}myBtn{% endif %}' data-time="{{ time }}" data-date="{{ ' '.join(params['days'][0]).lower() }}">{{ time }}</td>
+                      <td class='{% if dt + " ".join(params["days"][1]).lower() in params["booking"] %}book{% else %}myBtn{% endif %}' data-time="{{ time }}" data-date="{{ ' '.join(params['days'][1]).lower() }}">{{ time }}</td>
+                      <td class='{% if dt + " ".join(params["days"][2]).lower() in params["booking"] %}book{% else %}myBtn{% endif %}' data-time="{{ time }}" data-date="{{ ' '.join(params['days'][2]).lower() }}">{{ time }}</td>
+                      <td class='{% if dt + " ".join(params["days"][3]).lower() in params["booking"] %}book{% else %}myBtn{% endif %}' data-time="{{ time }}" data-date="{{ ' '.join(params['days'][3]).lower() }}">{{ time }}</td>
+                      <td class='{% if dt + " ".join(params["days"][4]).lower() in params["booking"] %}book{% else %}myBtn{% endif %}' data-time="{{ time }}" data-date="{{ ' '.join(params['days'][4]).lower() }}">{{ time }}</td>
+                      <td class='{% if dt + " ".join(params["days"][5]).lower() in params["booking"] %}book{% else %}myBtn{% endif %}' data-time="{{ time }}" data-date="{{ ' '.join(params['days'][5]).lower() }}">{{ time }}</td>
+                      <td class='{% if dt + " ".join(params["days"][6]).lower() in params["booking"] %}book{% else %}myBtn{% endif %}' data-time="{{ time }}" data-date="{{ ' '.join(params['days'][6]).lower() }}">{{ time }}</td>
                     </tr>
                 {% endfor %}
               </tbody>

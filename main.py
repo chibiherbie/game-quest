@@ -16,17 +16,26 @@ locale.setlocale(locale.LC_ALL, "ru")  # задаем локально для в
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
+    db_sess = db_session.create_session()
+
     params = {}
     params['now_date'] = dt.date.today().strftime("%d %B")
     params['week_date'] = (dt.date.today() + dt.timedelta(weeks=1)).strftime("%d %B")
     params['days'] = [(dt.date.today() + dt.timedelta(days=i)).strftime('%d %B %A').split() for i in range(7)]
+    params['booking'] = [i[0] for i in db_sess.query(User.dt_start).all()]
+
+    dt_today = (dt.date.today() + dt.timedelta(hours=1)).strftime('%d %B %A')
+    for i in range(7):
+        if dt_today in [' '.join(i) for i in params['days']]:
+            print(params['days'])
+            print(dt_today)
+
     form = BookingForm()
     if form.validate_on_submit():
         # if form.password.data != form.password_again.data:
         #     return render_template('register.html', title='Регистрация',
         #                            form=form,
         #                            message="Пароли не совпадают")
-        db_sess = db_session.create_session()
         # if db_sess.query(User).filter(User.email == form.email.data).first():
         #     return render_template('register.html', title='Регистрация',
         #                            form=form,

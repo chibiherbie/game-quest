@@ -416,6 +416,17 @@ ul li:hover {
     box-shadow: 0 0 30px 3px #262626;
 }
 
+.book {
+    color: #444444 !important;
+    background-color: #0e0e0e !important;
+}
+
+.book:hover {
+    color: #444444 !important;
+    background-color: #0e0e0e !important;
+    cursor: default !important;
+}
+
 ul li:hover .fa-vk {
     color: #5282b8;
 }
