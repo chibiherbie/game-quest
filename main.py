@@ -11,7 +11,7 @@ from random import choice
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
-locale.setlocale(locale.LC_ALL, "ru")  # задаем локально для вывода даты на русском
+locale.setlocale(locale.LC_ALL, "ru_RU.utf8")  # задаем локально для вывода даты на русском
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -68,6 +68,7 @@ def genereta_url():
 def main():
     db_session.global_init("db/quest.db")
     port = int(os.environ.get("PORT", 5000))
+    # print((dt.date.today() + dt.timedelta(weeks=1)).strftime("%d %B"))
     # app.run()
     app.run(host='0.0.0.0', port=port)
 
