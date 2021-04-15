@@ -62,7 +62,7 @@ def genereta_url():
 
 
 def main():
-    db_session.global_init(os.environ.get('DATABASE_URL'))
+    db_session.global_init('db/quest.db')
     port = int(os.environ.get("PORT", 5000))
     # print((dt.date.today() + dt.timedelta(weeks=1)).strftime("%d %B"))
     # app.run()
