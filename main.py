@@ -24,12 +24,6 @@ def index():
     params['days'] = [(dt.date.today() + dt.timedelta(days=i)).strftime('%d %B %A').split() for i in range(7)]
     params['booking'] = [i[0] for i in db_sess.query(User.dt_start).all()]
 
-    dt_today = (dt.date.today() + dt.timedelta(hours=1)).strftime('%d %B %A')
-    for i in range(7):
-        if dt_today in [' '.join(i) for i in params['days']]:
-            print(params['days'])
-            print(dt_today)
-
     form = BookingForm()
     if form.validate_on_submit():
         # if form.password.data != form.password_again.data:
@@ -66,7 +60,7 @@ def genereta_url():
 
 
 def main():
-    db_session.global_init(os.environ.get('DATABASE_URL'))
+    db_session.global_init(os.environ.get('DATABASE_URL') + 'db/quest.db')
     port = int(os.environ.get("PORT", 5000))
     # print((dt.date.today() + dt.timedelta(weeks=1)).strftime("%d %B"))
     # app.run()
