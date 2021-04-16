@@ -20,15 +20,17 @@ TIME = ['10:00', '11:30', '13:00', '14:30', '16:00', '17:30', '19:00']  # вре
 def index():
     db_sess = db_session.create_session()
 
+    # удаляем время, которые уже прошло
+    for i in TIME:
+        if i < dt.datetime.now().strftime('%H:%M'):
+            del_time(i, db_sess)
+
+    # формируем данные
     params = {}
     params['now_date'] = dt.date.today().strftime("%d %B")
     params['week_date'] = (dt.date.today() + dt.timedelta(weeks=1)).strftime("%d %B")
     params['days'] = [(dt.date.today() + dt.timedelta(days=i)).strftime('%d %B %A').split() for i in range(7)]
     params['booking'] = [i[0] for i in db_sess.query(User.dt_start).all()]
-
-    for i in TIME:
-        if i < dt.datetime.now().strftime('%H:%M'):
-            del_time(i, db_sess)
 
     form = BookingForm()
     if form.validate_on_submit():
