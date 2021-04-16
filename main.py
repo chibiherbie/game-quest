@@ -6,18 +6,26 @@ import os
 import datetime as dt
 import locale
 from random import choice
-
+from mail_sender import send_email
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 locale.setlocale(locale.LC_ALL, "ru_RU.utf8")  # задаем локально для вывода даты на русском
 
+TIME = ['10:00', '11:30', '13:00', '14:30', '16:00', '17:30', '19:00']  # время закрытия игр
+
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
     db_sess = db_session.create_session()
 
+    # удаляем время, которые уже прошло
+    for i in TIME:
+        if i < dt.datetime.now().strftime('%H:%M'):
+            del_time(i, db_sess)
+
+    # формируем данные
     params = {}
     params['now_date'] = dt.date.today().strftime("%d %B")
     params['week_date'] = (dt.date.today() + dt.timedelta(weeks=1)).strftime("%d %B")
@@ -26,14 +34,6 @@ def index():
 
     form = BookingForm()
     if form.validate_on_submit():
-        # if form.password.data != form.password_again.data:
-        #     return render_template('register.html', title='Регистрация',
-        #                            form=form,
-        #                            message="Пароли не совпадают")
-        # if db_sess.query(User).filter(User.email == form.email.data).first():
-        #     return render_template('register.html', title='Регистрация',
-        #                            form=form,
-        #                            message="Такой пользователь уже есть")
         url = genereta_url()
         user = User(
             name=form.name.data,
@@ -43,9 +43,13 @@ def index():
             url=url
         )
         db_sess.add(user)
-        db_sess.commit()
 
-        return redirect('/')
+        if send_email(form.email.data, form.name.data, form.dt_start.data, form.address.data, url):
+            db_sess.commit()
+            print('ВСЁ ОКЕЙ')
+            return render_template('index.html', params=params, form=form, message='Всё ок')
+        print('ОШИБКА')
+        redirect('/')
     return render_template('index.html', params=params, form=form)
 
 
@@ -59,11 +63,28 @@ def genereta_url():
     return url
 
 
+def del_time(time, db_sess):
+    now = f"{str(int(TIME[TIME.index(time)].split(':')[0]) + 1) + ':' + TIME[TIME.index(time)].split(':')[1]}" \
+          f" {dt.date.today().strftime('%d %B %A').lower()}"
+
+    if not db_sess.query(User).filter(User.dt_start == now).first():
+        user = User(
+            name='ОТМЕНА',
+            email='ОТМЕНА',
+            address='ОТМЕНА',
+            dt_start=now,
+            url='ОТМЕНА'
+        )
+
+        db_sess.add(user)
+        db_sess.commit()
+        print('Время закрыто: ', now)
+
+
 def main():
     db_session.global_init(os.environ.get('DATABASE_URL', 'sqlite:///db/quest.db?check_same_thread=False'))
     port = int(os.environ.get("PORT", 5000))
-    # print((dt.date.today() + dt.timedelta(weeks=1)).strftime("%d %B"))
-    # app.run()
+    app.run()
     app.run(host='0.0.0.0', port=port)
 
 
