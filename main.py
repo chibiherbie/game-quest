@@ -24,8 +24,6 @@ def index():
     params['days'] = [(dt.date.today() + dt.timedelta(days=i)).strftime('%d %B %A').split() for i in range(7)]
     params['booking'] = [i[0] for i in db_sess.query(User.dt_start).all()]
 
-    print(db_sess.query(User.dt_start).all())
-
     form = BookingForm()
     if form.validate_on_submit():
         # if form.password.data != form.password_again.data:
@@ -65,7 +63,7 @@ def main():
     db_session.global_init(os.environ.get('DATABASE_URL', 'sqlite:///db/quest.db?check_same_thread=False'))
     port = int(os.environ.get("PORT", 5000))
     # print((dt.date.today() + dt.timedelta(weeks=1)).strftime("%d %B"))
-    app.run()
+    # app.run()
     app.run(host='0.0.0.0', port=port)
 
 
