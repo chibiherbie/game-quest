@@ -1,11 +1,12 @@
 import locale
+import os
 import schedule
 import datetime as dt
 from _data import db_session
 from _data.users import User
 
 TIME = ['10:00', '11:30', '13:00', '14:30', '16:00', '17:30', '19:00']
-locale.setlocale(locale.LC_ALL, "ru")  # задаем локально для вывода даты на русском
+locale.setlocale(locale.LC_ALL, "ru_RU.utf8")  # задаем локально для вывода даты на русском
 
 
 def del_time(time):
@@ -44,6 +45,6 @@ schedule.every().day.at('01:00').do(del_day)
 
 
 while True:
-    db_session.global_init("db/quest.db")
+    db_session.global_init(os.environ.get('DATABASE_URL', 'sqlite:///db/quest.db?check_same_thread=False'))
     schedule.run_pending()
 
