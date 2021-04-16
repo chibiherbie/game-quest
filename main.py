@@ -31,6 +31,9 @@ def index():
     params['week_date'] = (dt.date.today() + dt.timedelta(weeks=1)).strftime("%d %B")
     params['days'] = [(dt.date.today() + dt.timedelta(days=i)).strftime('%d %B %A').split() for i in range(7)]
     params['booking'] = [i[0] for i in db_sess.query(User.dt_start).all()]
+    params['message'] = ['', 0]
+    params['date'] = ''
+    params['time'] = ''
 
     form = BookingForm()
     if form.validate_on_submit():
@@ -43,13 +46,16 @@ def index():
             url=url
         )
         db_sess.add(user)
+        params['time'] = form.dt_start.data.split()[0]
+        params['date'] = ' '.join(form.dt_start.data.split()[1:])
 
         if send_email(form.email.data, form.name.data, form.dt_start.data, form.address.data, url):
             db_sess.commit()
-            print('ВСЁ ОКЕЙ')
-            return render_template('index.html', params=params, form=form, message='Всё ок')
-        print('ОШИБКА')
-        redirect('/')
+            params['message'] = ['Вы зарегестрировались. На вашу почту отправлено письмо', 1]
+            return render_template('index.html', params=params, form=form)
+
+        params['message'] = ['Ошибка', 0]
+        return render_template('index.html', params=params, form=form)
     return render_template('index.html', params=params, form=form)
 
 

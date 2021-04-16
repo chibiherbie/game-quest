@@ -98,14 +98,14 @@
   </div>
 
   <!-- Модальное диалоговое окно -->
-  <div id='myModal' class='modal fadeOut'>
+  <div id='myModal' class='modal fadeIn' {% if params['message'][0] or form.address.errors %} style="display: block;" {% endif %}>
     <div class='modal-content'>
       <span><a  class='close' href="#schedule">&times;</a></span>
       <div class="container-form">
         <form action="" method="post">
           {{ form.hidden_tag() }}
-          <p class="form-date">ДАТА</p> 
-          <p class="form-time">ВРЕМЯ</p>
+          <p class="form-date">{{ params['date'] }}</p>
+          <p class="form-time">{{ params['time'] }}</p>
           {{ form.dt_start(class='form-control') }}
           <p>
             {{ form.name.label }}<br>
@@ -135,7 +135,8 @@
               {% endfor %}  
           </p>
           <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-              {{message}}
+              <p class="form-msg" {% if params['message'][1] %} style="color: #00FF00;" {% else %}
+              style='color: #A52A2A;'{% endif %}>{{params['message'][0]}}<p>
         </form>
       </div>
     </div>
