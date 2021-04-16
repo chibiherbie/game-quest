@@ -49,8 +49,7 @@ schedule.every().day.at('01:00').do(del_day)
 
 
 db_session.global_init(os.environ.get('DATABASE_URL', 'sqlite:///db/quest.db?check_same_thread=False'))
-print(dt.datetime.now())
-del_time(TIME[1])
+print('Время сейчас:', dt.datetime.now())
 while True:
     schedule.run_pending()
 
