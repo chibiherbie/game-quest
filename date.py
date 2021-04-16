@@ -10,20 +10,23 @@ locale.setlocale(locale.LC_ALL, "ru_RU.utf8")  # задаем локально �
 
 
 def del_time(time):
-    db_sess = db_session.create_session()
+    try:
+        db_sess = db_session.create_session()
 
-    now = f'{time} {dt.date.today().strftime("%d %B %A").lower()}'
-    user = User(
-        name='ОТМЕНА',
-        email='ОТМЕНА',
-        address='ОТМЕНА',
-        dt_start=now,
-        url='ОТМЕНА'
-    )
+        now = f'{time} {dt.date.today().strftime("%d %B %A").lower()}'
+        user = User(
+            name='ОТМЕНА',
+            email='ОТМЕНА',
+            address='ОТМЕНА',
+            dt_start=now,
+            url='ОТМЕНА'
+        )
 
-    db_sess.add(user)
-    db_sess.commit()
-    print('Время закрыто: ', now)
+        db_sess.add(user)
+        db_sess.commit()
+        print('Время закрыто: ', now)
+    except Exception as e:
+        print(e)
 
 
 def del_day():
@@ -44,7 +47,8 @@ for i in TIME:
 schedule.every().day.at('01:00').do(del_day)
 
 
+db_session.global_init(os.environ.get('DATABASE_URL', 'sqlite:///db/quest.db?check_same_thread=False'))
+del_time('14:00')
 while True:
-    db_session.global_init(os.environ.get('DATABASE_URL', 'sqlite:///db/quest.db?check_same_thread=False'))
     schedule.run_pending()
 
