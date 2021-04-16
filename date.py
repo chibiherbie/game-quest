@@ -13,7 +13,8 @@ def del_time(time):
     try:
         db_sess = db_session.create_session()
 
-        now = f'{time} {dt.date.today().strftime("%d %B %A").lower()}'
+        now = f"{str(int(TIME[TIME.index(time)].split(':')[0]) + 1) + ':' + TIME[TIME.index(time)].split(':')[1]}" \
+              f" {dt.date.today().strftime('%d %B %A').lower()}"
         user = User(
             name='ОТМЕНА',
             email='ОТМЕНА',
@@ -49,6 +50,7 @@ schedule.every().day.at('01:00').do(del_day)
 
 db_session.global_init(os.environ.get('DATABASE_URL', 'sqlite:///db/quest.db?check_same_thread=False'))
 print(dt.datetime.now())
+del_time(TIME[1])
 while True:
     schedule.run_pending()
 
