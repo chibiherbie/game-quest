@@ -582,4 +582,8 @@ form label {
     display: none;
 }
 
+.form-msg {
+    padding-top: 13px !important;
+}
+
 /* /pop-up */

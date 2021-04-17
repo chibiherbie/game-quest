@@ -1,0 +1,164 @@
+/* main */
+* {
+    font-family: 'Noto Sans', sans-serif;
+    outline: none;
+    color: #f2f2f2;
+}
+
+::-webkit-scrollbar { /* chrome based */
+    width: 0px;  /* ширина scrollbar'a */
+    background: transparent;  /* опционально */
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    background-color: #0d0d0d;
+
+    overflow: none;
+    -ms-overflow-style: none;  /* IE 10+ */
+    scrollbar-width: none; /* Firefox */
+}
+
+a {
+    text-decoration: none;
+}
+
+/* /main */
+
+/*  */
+
+.modal {
+    display: block;
+    position: fixed; 
+    z-index: 1000; /* Отображение на заднем плане */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(41, 41, 41);
+}
+
+
+.modal-content {
+    overflow: hidden;
+    background-color: #262626;
+    margin: 5% auto; /* 15% от верха и центрировано */
+    padding: 20px;
+    border: 1px solid #f2f2f2;
+    width: 80%;
+    height: 80%;
+    box-shadow: 5px 15px 50px rgba(0, 0, 0, 0.719),
+                -5px -15px 50px rgba(0, 0, 0, 0.719);
+}
+
+.container-form {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.container-form p {
+    padding-top: 5px;
+}
+
+.container-form p label {
+    padding-bottom: 5px;
+}
+
+form {
+    width: 100%;
+}
+
+.close {
+    color: #f2f2f2;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    width: 40px;
+}
+
+.close:hover,
+.close:focus {
+    color: #888888;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+form label {
+    color: #f2f2f2
+}
+
+.form-user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 45px;
+}
+
+.form-time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+.form-date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+.form-control {
+    color: #262626;
+    background-color: #f2f2f2;
+
+}
+
+.form-control option {
+    color: #262626;
+}
+
+.btn-primary {
+    background-color: transparent;
+    border-color: #f2f2f2;
+}
+
+.btn-primary:hover {
+    color: #262626;
+    background-color: #f2f2f2;
+    border-color: #f2f2f2;
+}
+
+#dt_start {
+    display: none;
+}
+
+.form-msg {
+    padding-top: 13px !important;
+}
+
+.form-textarea {
+    align-items: center;
+    padding-top: 35px !important;
+}
+
+#about {
+    background-color: #f2f2f2;
+    width: 100%;
+    height: 100px;
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 5px;
+    max-height: 500px;
+    max-width: 1800px;
+    min-width: 300px;
+    min-height: 150px;
+}
