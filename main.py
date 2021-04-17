@@ -25,18 +25,19 @@ def index():
         if i < dt.datetime.now().strftime('%H:%M'):
             del_time(i, db_sess)
 
-    # формируем данные
-    params = {}
-    params['now_date'] = dt.date.today().strftime("%d %B")
-    params['week_date'] = (dt.date.today() + dt.timedelta(weeks=1)).strftime("%d %B")
-    params['days'] = [(dt.date.today() + dt.timedelta(days=i)).strftime('%d %B %A').split() for i in range(7)]
-    params['booking'] = [i[0] for i in db_sess.query(User.dt_start).all()]
-    params['message'] = ['', 0]
-    params['date'] = ''
-    params['time'] = ''
+    # формируем данные - params
+    params = create_session(db_sess)
 
     form = BookingForm()
     if form.validate_on_submit():
+        params['time'] = form.dt_start.data.split()[0]
+        params['date'] = ' '.join(form.dt_start.data.split()[1:])
+
+        # если дата зарегестрирована
+        if db_sess.query(User).filter(User.dt_start == form.dt_start.data).first():
+            params['message'] = ['Дата уже зарегестрирована', 0]
+            return render_template('index.html', params=params, form=form)
+
         url = genereta_url()
         user = User(
             name=form.name.data,
@@ -46,12 +47,16 @@ def index():
             url=url
         )
         db_sess.add(user)
-        params['time'] = form.dt_start.data.split()[0]
-        params['date'] = ' '.join(form.dt_start.data.split()[1:])
 
         if send_email(form.email.data, form.name.data, form.dt_start.data, form.address.data, url):
             db_sess.commit()
+
+            # пересоздаём params с обн. данными
+            params = create_session(db_sess)
+            params['time'] = form.dt_start.data.split()[0]
+            params['date'] = ' '.join(form.dt_start.data.split()[1:])
             params['message'] = ['Вы зарегестрировались. На вашу почту отправлено письмо', 1]
+
             return render_template('index.html', params=params, form=form)
 
         params['message'] = ['Ошибка', 0]
@@ -85,6 +90,18 @@ def del_time(time, db_sess):
         db_sess.add(user)
         db_sess.commit()
         print('Время закрыто: ', now)
+
+
+def create_session(db_sess):
+    params = {}
+    params['now_date'] = dt.date.today().strftime("%d %B")
+    params['week_date'] = (dt.date.today() + dt.timedelta(weeks=1)).strftime("%d %B")
+    params['days'] = [(dt.date.today() + dt.timedelta(days=i)).strftime('%d %B %A').split() for i in range(7)]
+    params['booking'] = [i[0] for i in db_sess.query(User.dt_start).all()]
+    params['message'] = ['', 0]
+    params['date'] = ''
+    params['time'] = ''
+    return params
 
 
 def main():
