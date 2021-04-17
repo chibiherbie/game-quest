@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 from _data import db_session
 from forms.user import BookingForm
 from _data.users import User
@@ -48,7 +48,8 @@ def index():
         )
         db_sess.add(user)
 
-        if send_email(form.email.data, form.name.data, form.dt_start.data, form.address.data, url):
+        if send_email(form.email.data, form.name.data, form.dt_start.data,
+                      form.address.data, f'{request.url}game-id/{url}'):
             db_sess.commit()
 
             # пересоздаём params с обн. данными
@@ -62,6 +63,29 @@ def index():
         params['message'] = ['Ошибка', 0]
         return render_template('index.html', params=params, form=form)
     return render_template('index.html', params=params, form=form)
+
+
+@app.route("/game-id/<url>", methods=['GET', 'POST'])
+def game_url(url):
+    db_sess = db_session.create_session()
+
+    user = db_sess.query(User).filter(User.url == url).first()
+    if user:
+        params = {}
+        params['message'] = ['', 0]
+        params['user'] = user.name
+        params['date'] = ' '.join(user.dt_start.split()[1:])
+        params['time'] = user.dt_start.split()[0]
+
+        if request.method == 'POST':
+            db_sess.delete(user)
+            db_sess.commit()
+            params['message'] = ['Игра отменена', 1]
+            print(request.form['about'])
+
+        return render_template('game_url.html', params=params)
+    else:
+        return 'ERROR'
 
 
 def genereta_url():
