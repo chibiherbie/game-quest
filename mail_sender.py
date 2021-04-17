@@ -29,3 +29,17 @@ def send_email(email, name, date, address, url):
     except Exception as e:
         print(e)
         return False
+
+
+def send_email_admin(text, name, date):
+    admin = os.getenv('FROM')
+    password = os.getenv('PASSWORD')
+    msg = MIMEMultipart()
+    msg['From'] = admin
+    msg['To'] = admin
+    msg['Subject'] = 'Отмена игры'
+    msg.attach(MIMEText(name + '\n' + date + '\n' + text))
+    server = smtplib.SMTP_SSL(os.getenv('HOST_E'), os.getenv('PORT_E'))
+    server.login(admin, password)
+    server.send_message(msg)
+    server.quit()

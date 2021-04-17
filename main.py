@@ -6,7 +6,7 @@ import os
 import datetime as dt
 import locale
 from random import choice
-from mail_sender import send_email
+from mail_sender import send_email, send_email_admin
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -81,7 +81,7 @@ def game_url(url):
             db_sess.delete(user)
             db_sess.commit()
             params['message'] = ['Игра отменена', 1]
-            print(request.form['about'])
+            send_email_admin(request.form['about'], user.name, user.dt_start)
 
         return render_template('game_url.html', params=params)
     else:
@@ -131,7 +131,7 @@ def create_session(db_sess):
 def main():
     db_session.global_init(os.environ.get('DATABASE_URL', 'sqlite:///db/quest.db?check_same_thread=False'))
     port = int(os.environ.get("PORT", 5000))
-    app.run()
+    # app.run()
     app.run(host='0.0.0.0', port=port)
 
 
