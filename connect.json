@@ -1,0 +1,8 @@
+{
+  "bot_police": {
+    "num_block": 0,
+    "text": "Отвечай как можно скорей!",
+    "isActive": true
+  },
+  "bot_admin": {}
+}
