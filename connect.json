@@ -19,6 +19,11 @@
     "isActive": false,
     "text": ""
   },
+  "bot_anonym": {
+    "num_block": 0,
+    "isActive": false,
+    "text": ""
+  },
   "bot_connect": {
     "num_block": 0,
     "isActive": false,
