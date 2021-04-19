@@ -13,7 +13,6 @@ dp = Dispatcher(bot)
 
 # переменная для выбора блока из сюжета
 num = 0
-relationships = 0
 
 logging.basicConfig(level=logging.INFO)
 
@@ -28,7 +27,7 @@ async def said(message: types.Message):
 
             post(f'http://127.0.0.1:5000/api/bot_connect', json={
                 "isActive": True,
-                "num_block": relationships,
+                "num_block": police_info[num][i][2],
                 "text": ''})
             return
     await bot.send_message(message.chat.id, choice(police_info[-1]))
@@ -38,7 +37,7 @@ async def get_start():
     global num
 
     while True:
-        bot_data = get(f'http://127.0.0.1:5000/api/bot_police').json()
+        bot_data = get(f'http://127.0.0.1:5000/api/bot_criminalist').json()
         if bot_data['isActive']:
             num = bot_data['num_block']
 
@@ -51,7 +50,7 @@ async def get_start():
 
             markup.add(item1, item2, item3, item4)
 
-            post(f'http://127.0.0.1:5000/api/bot_police', json={
+            post(f'http://127.0.0.1:5000/api/bot_criminalist', json={
                 "isActive": False,
                 "num_block": num,
                 "text": 'text'})

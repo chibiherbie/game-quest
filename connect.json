@@ -13,5 +13,10 @@
     "num_block": 0,
     "isActive": false,
     "text": ""
+  },
+  "bot_criminalist": {
+    "num_block": 0,
+    "isActive": false,
+    "text": ""
   }
 }
