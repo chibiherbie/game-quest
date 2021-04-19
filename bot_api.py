@@ -34,6 +34,23 @@ class BotsResource(Resource):
         with open('connect.json', 'w') as file:
             json.dump(data, file, ensure_ascii=False, indent=2)
 
+    def delete(self, bot):
+        bots = {
+          "bot_police": {
+            "num_block": 0,
+            "text": "",
+            "isActive": False
+          },
+          "bot_admin": {},
+          "bot_connect": {
+            "num_block": 0,
+            "isActive": False,
+            "text": ""
+          }
+        }
+        with open('connect.json') as f:
+            json.dump(bots, f)
+
 
 def main():
     api.add_resource(BotsResource, '/api/<bot>')

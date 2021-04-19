@@ -4,5 +4,10 @@
     "text": "text",
     "isActive": false
   },
-  "bot_admin": {}
+  "bot_admin": {},
+  "bot_connect": {
+    "num_block": 0,
+    "isActive": false,
+    "text": ""
+  }
 }

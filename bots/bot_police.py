@@ -25,16 +25,22 @@ async def said(message: types.Message):
             markup_remove = types.ReplyKeyboardRemove()
             await asyncio.sleep(2)
             await bot.send_message(message.chat.id, police_info[num][i][1], reply_markup=markup_remove)
-            break
+
+            post(f'http://127.0.0.1:5000/api/bot_connect', json={
+                "isActive": True,
+                "num_block": relationships,
+                "text": ''})
+            return
     await bot.send_message(message.chat.id, choice(police_info[-1]))
 
 
 async def get_start():
     global num
+
     while True:
-        bot_p = get(f'http://127.0.0.1:5000/api/bot_police').json()
-        if bot_p['isActive']:
-            num = bot_p['num_block']
+        bot_data = get(f'http://127.0.0.1:5000/api/bot_police').json()
+        if bot_data['isActive']:
+            num = bot_data['num_block']
 
             markup = types.ReplyKeyboardMarkup(row_width=1, one_time_keyboard=True)  # создание клавиатуры
 
@@ -50,7 +56,7 @@ async def get_start():
                 "num_block": num,
                 "text": 'text'})
 
-            await bot.send_message(config.ID_PERSON, bot_p['text'], reply_markup=markup)
+            await bot.send_message(config.ID_PERSON, bot_data['text'], reply_markup=markup)
         await asyncio.sleep(1)
 
 

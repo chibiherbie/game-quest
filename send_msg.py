@@ -3,7 +3,7 @@ import asyncio
 from aiogram import Bot
 
 # глобальная переменная
-bot = None
+bot = Bot(token=config.TOKEN_POLICE)
 bot_admin = Bot(token=config.TOKEN_POLICE)  # будет оповещать о значимых моментавх в игре
 
 
