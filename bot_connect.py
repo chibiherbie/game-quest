@@ -123,6 +123,7 @@ def game(const):
 
     # криминалист, Досье
     s_m('Сосвем забыл скинуть тебе досье. Держи', config.TOKEN_CRIMINALIST)
+    s_m('AgACAgIAAxkDAAIBcV8QPvYaD3u0_ZPyt8w3VdCwOqX1AAJkrjEbPNiBSCta4itSNvIxZJvfky4AAwEAAwIAA20AA2bKAgABGgQ')
 
     sleep(60)  # должно быть 60 = 1мин
 
