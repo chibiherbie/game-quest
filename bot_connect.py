@@ -1,11 +1,12 @@
 import json
-
-import config
 from time import sleep
-from send_msg import s_m, s_m_admin
+from requests import get, post, delete
 import logging
 
-from requests import get, post, delete
+import config
+from send_msg import s_m, s_m_admin
+from bots import bot_journalist
+
 
 
 # Отношения с игроком
@@ -36,6 +37,7 @@ def wait_answer():
 
 def game(const):
     global relationships_bot_police
+    global relationships_bot_criminalist
 
     # очищаем остатки прошлой игры
     delete('http://127.0.0.1:5000/api/bot_connect')
@@ -54,6 +56,9 @@ def game(const):
     post_info('bot_police', 0, 'Отвечай как можно скорей!')
 
     relationships_bot_police += wait_answer()
+
+    # при плохих отношениях, майор не скажет о времени, а только потом напомнит ему
+    time_talk_answer = False
 
     # Первая развязка (1, 2, 3)
     if relationships_bot_police >= 0:
@@ -97,9 +102,41 @@ def game(const):
             s_m(f'Значит неподалеку что-то случилось, выдвигайся туда\nУ тебя есть {const["time_1"]} мин. Вот координаты'
                 f' "{const["coor_1"]}"')
 
+    # криминалист
+    s_m('Слышал, ты снова с нами\nХотел напомнить, чтобы ты не забывал про меня. А то знаю я тебя...\n', config.TOKEN_CRIMINALIST)
 
-if __name__ == '__main__':
-    with open('const_game.json') as file:
+    # криминалист (0, 1)
+    post_info('bot_criminalist', 0, 'Я буду помогать тебе с уликами. Отправляй мне все улики, которые найдешь.'
+                                    ' Они выглядят примерно так “asdfgq” Я тебе отправлю по ним показания.')
+
+    # ждём ответа
+    relationships_bot_criminalist += wait_answer()
+
+    if relationships_bot_criminalist == 0:
+        post_info('bot_criminalist', 1, 'Всё по старой схеме')
+        relationships_bot_criminalist += wait_answer()
+
+    # первые новости, bot__journalist
+    bot_journalist.news_1()
+
+    sleep(20)
+
+    # криминалист, Досье
+    s_m('Сосвем забыл скинуть тебе досье. Держи', config.TOKEN_CRIMINALIST)
+
+    sleep(60)  # должно быть 60 = 1мин
+
+    # если нагрубил, то о времени сообщается позже. примерно 5 мин от времени которое даётся
+    if time_talk_answer:
+        s_m('Совсем забыл сказать, что мы ограничены по времени и работать нужно как можно быстрее,'
+            ' иначе приедут федералы и будет худо\nУ тебя на все дела осталось 15 мин', config.TOKEN_POLICE)
+
+
+def main():
+    with open('const_game.json', encoding='utf-8') as file:
         data = json.load(file)['Молокова']  # input()
     game(data)
 
+
+if __name__ == '__main__':
+    main()
