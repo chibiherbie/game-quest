@@ -31,3 +31,21 @@ async def admin(m):
 def s_m_admin(msg):
     loop = asyncio.get_event_loop()
     loop.run_until_complete(admin(msg))
+
+
+# ---- send photo ----
+
+async def photo(m):
+    await bot.send_photo(config.ID_PERSON, m)
+
+
+# для отправки фото
+def s_m_photo(msg, token_id=''):
+    global bot
+
+    # если новый TOKEN
+    if token_id:
+        bot = Bot(token=token_id)
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(photo(msg))
