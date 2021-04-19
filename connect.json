@@ -4,7 +4,11 @@
     "text": "text",
     "isActive": false
   },
-  "bot_admin": {},
+  "bot_talks": {
+    "num_block": 0,
+    "text": "text",
+    "isActive": false
+  },
   "bot_connect": {
     "num_block": 0,
     "isActive": false,

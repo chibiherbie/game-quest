@@ -5,10 +5,10 @@ from requests import get, post
 import logging
 
 import config
-from bots_info.police import police_info
+from bots_info.talks import talks_info
 
 
-bot = Bot(token=config.TOKEN_POLICE)
+bot = Bot(token=config.TOKEN_TALKS)
 dp = Dispatcher(bot)
 
 # переменная для выбора блока из сюжета
@@ -21,37 +21,35 @@ logging.basicConfig(level=logging.INFO)
 @dp.message_handler(content_types=['text'])
 async def said(message: types.Message):
     for i in range(4):
-        if message.text == police_info[num][i][0]:
+        if message.text == talks_info[num][i][0]:
             markup_remove = types.ReplyKeyboardRemove()
             await asyncio.sleep(2)
-            await bot.send_message(message.chat.id, police_info[num][i][1], reply_markup=markup_remove)
+            await bot.send_message(message.chat.id, talks_info[num][i][1], reply_markup=markup_remove)
 
             post(f'http://127.0.0.1:5000/api/bot_connect', json={
                 "isActive": True,
                 "num_block": relationships,
                 "text": ''})
             return
-    await bot.send_message(message.chat.id, choice(police_info[-1]))
+    await bot.send_message(message.chat.id, choice(talks_info[-1]))
 
 
 async def get_start():
     global num
 
     while True:
-        bot_data = get(f'http://127.0.0.1:5000/api/bot_police').json()
+        bot_data = get(f'http://127.0.0.1:5000/api/bot_talks').json()
         if bot_data['isActive']:
             num = bot_data['num_block']
 
             markup = types.ReplyKeyboardMarkup(row_width=1, one_time_keyboard=True)  # создание клавиатуры
 
-            item1 = types.KeyboardButton(police_info[num][0][0])
-            item2 = types.KeyboardButton(police_info[num][1][0])
-            item3 = types.KeyboardButton(police_info[num][2][0])
-            item4 = types.KeyboardButton(police_info[num][3][0])
+            item1 = types.KeyboardButton(talks_info[num][0][0])
+            item2 = types.KeyboardButton(talks_info[num][1][0])
 
-            markup.add(item1, item2, item3, item4)
+            markup.add(item1, item2)
 
-            post(f'http://127.0.0.1:5000/api/bot_police', json={
+            post(f'http://127.0.0.1:5000/api/bot_talks', json={
                 "isActive": False,
                 "num_block": num,
                 "text": 'text'})
