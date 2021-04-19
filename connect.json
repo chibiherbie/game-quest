@@ -9,12 +9,17 @@
     "text": "text",
     "isActive": false
   },
-  "bot_connect": {
+  "bot_criminalist": {
     "num_block": 0,
     "isActive": false,
     "text": ""
   },
-  "bot_criminalist": {
+  "bot_fortuneteller": {
+    "num_block": 0,
+    "isActive": false,
+    "text": ""
+  },
+  "bot_connect": {
     "num_block": 0,
     "isActive": false,
     "text": ""
