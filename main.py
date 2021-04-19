@@ -30,32 +30,32 @@ def index():
 
     form = BookingForm()
     if form.validate_on_submit():
-        params['time'] = form.dt_start.data.split()[0]
-        params['date'] = ' '.join(form.dt_start.data.split()[1:])
+        params['time'] = form.dt_start.const.split()[0]
+        params['date'] = ' '.join(form.dt_start.const.split()[1:])
 
         # если дата зарегестрирована
-        if db_sess.query(User).filter(User.dt_start == form.dt_start.data).first():
+        if db_sess.query(User).filter(User.dt_start == form.dt_start.const).first():
             params['message'] = ['Дата уже зарегестрирована', 0]
             return render_template('index.html', params=params, form=form)
 
         url = genereta_url()
         user = User(
-            name=form.name.data,
-            email=form.email.data,
-            address=form.address.data,
-            dt_start=form.dt_start.data,
+            name=form.name.const,
+            email=form.email.const,
+            address=form.address.const,
+            dt_start=form.dt_start.const,
             url=url
         )
         db_sess.add(user)
 
-        if send_email(form.email.data, form.name.data, form.dt_start.data,
-                      form.address.data, f'{request.url}game-id/{url}'):
+        if send_email(form.email.const, form.name.const, form.dt_start.const,
+                      form.address.const, f'{request.url}game-id/{url}'):
             db_sess.commit()
 
             # пересоздаём params с обн. данными
             params = create_session(db_sess)
-            params['time'] = form.dt_start.data.split()[0]
-            params['date'] = ' '.join(form.dt_start.data.split()[1:])
+            params['time'] = form.dt_start.const.split()[0]
+            params['date'] = ' '.join(form.dt_start.const.split()[1:])
             params['message'] = ['Вы зарегестрировались. На вашу почту отправлено письмо', 1]
 
             return render_template('index.html', params=params, form=form)
