@@ -34,6 +34,7 @@ class BotsResource(Resource):
         with open('connect.json', 'w') as file:
             json.dump(data, file, ensure_ascii=False, indent=2)
 
+    # перезагружаем файл связи
     def delete(self, bot):
         bots = {
           "bot_police": {
