@@ -12,6 +12,10 @@ public class ProgrammManager : MonoBehaviour
 
     private ARRaycastManager ARRaycastManagerScript;
 
+    private Vector2 TouchPosition;
+
+    public GameObject ObjectToSpawn;
+
     void Start()
     {
         ARRaycastManagerScript = FindObjectOfType<ARRaycastManager>();
@@ -32,10 +36,17 @@ public class ProgrammManager : MonoBehaviour
 
         ARRaycastManagerScript.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), hits, TrackableType.Planes);
 
+        // еслси есть пересечения, показываем маркер
         if (hits.Count > 0)
         {
             PlaneMarkerPrefab.transform.position = hits[0].pose.position;
             PlaneMarkerPrefab.SetActive(true);
+        }
+
+        // ставим сцену на точку
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            Instantiate(ObjectToSpawn, hits[0].pose.position, ObjectToSpawn.transform.rotation);
         }
     }
 }

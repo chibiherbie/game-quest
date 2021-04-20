@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1367
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -118,10 +118,10 @@ MonoBehaviour:
     y: 30
     width: 2560
     height: 1317
-  m_MinSize: {x: 910, y: 442}
-  m_MaxSize: {x: 22005, y: 10021}
+  m_MinSize: {x: 911, y: 442}
+  m_MaxSize: {x: 22006, y: 10021}
   vertical: 0
-  controlID: 89
+  controlID: 112
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_MinSize: {x: 201, y: 442}
   m_MaxSize: {x: 4001, y: 8042}
   vertical: 1
-  controlID: 90
+  controlID: 113
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -467,9 +467,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -2.375918, y: -0.83023024, z: 0.7418866}
+    m_Target: {x: -0.5158085, y: -0.21471873, z: 0.16311836}
     speed: 2
-    m_Value: {x: -2.375918, y: -0.83023024, z: 0.7418866}
+    m_Value: {x: -0.5158085, y: -0.21471873, z: 0.16311836}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -516,13 +516,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.18580668, y: 0.6820687, z: -0.18569504, w: -0.68248045}
+    m_Target: {x: -0.15350124, y: 0.6075351, z: -0.1211371, w: -0.76985}
     speed: 2
-    m_Value: {x: -0.1858063, y: 0.68206733, z: -0.18569466, w: -0.6824791}
+    m_Value: {x: -0.15350087, y: 0.6075337, z: -0.12113681, w: -0.76984817}
   m_Size:
-    m_Target: 4.9909334
+    m_Target: 0.8275339
     speed: 2
-    m_Value: 4.9909334
+    m_Value: 0.8275339
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -627,7 +627,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 72e9ffffb2e9ffff18ebffff90f2ffffd0f2ffff2ef4ffff52fbffff
+      m_ExpandedIDs: 66a2ffffa6a2ffffa8a2fffffeaaffff3eabffff9cacffff76aeffffb8aeffff16b0ffffdcdeffff1cdfffff7ae0ffff2ce3ffff52fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -689,36 +689,36 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Packages/com.unity.xr.arfoundation/Tests/CodeSamples
+    - Assets/Prefabs
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 71
   m_LastFolders:
-  - Packages/com.unity.xr.arfoundation/Tests/CodeSamples
+  - Assets/Prefabs
   m_LastFoldersGridSize: 71
   m_LastProjectPath: D:\game-quest\unity\AR
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 0c550000
-    m_LastClickedID: 21772
-    m_ExpandedIDs: 00000000c8520000ca520000cc520000ec54000000ca9a3bffffff7f
+    m_SelectedIDs: fc530000
+    m_LastClickedID: 21500
+    m_ExpandedIDs: 00000000c8520000ca520000ce52000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Scenes
+      m_OriginalName: Scenes
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 21208
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_SearchString: 
@@ -732,7 +732,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000c8520000ca520000cc520000
+    m_ExpandedIDs: 00000000c8520000ca520000cc520000ce520000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -760,7 +760,7 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: 7e420000003a0000fc410000544600009c480000884300004a3d0000000000002e410000724d0000d04e0000
+    m_ExpandedInstanceIDs: 7e420000003a0000fc410000544600009c480000884300004a3d00002e410000724d0000d04e000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -56,6 +56,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 64
       Script: {instanceID: 0}
+    - Class: 65
+      Script: {instanceID: 0}
     - Class: 89
       Script: {instanceID: 0}
     - Class: 104
@@ -107,7 +109,7 @@ ScriptsOnlyBuild:
     className: ARPlane
   - hash:
       serializedVersion: 2
-      Hash: 4db28a3b8e47e2c85830e3908b20c386
+      Hash: a130cb914077a57a773ba5a5c6a1a0ff
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ProgrammManager
