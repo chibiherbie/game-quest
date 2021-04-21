@@ -54,6 +54,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\ProgrammManager.cs" />
+    <Compile Include="Assets\Script\use_api.cs" />
+    <Compile Include="Assets\Script\HttpRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

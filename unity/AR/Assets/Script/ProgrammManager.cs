@@ -27,6 +27,7 @@ public class ProgrammManager : MonoBehaviour
     void Update()
     {
         SetMarker();
+        
     }
 
 
@@ -49,4 +50,5 @@ public class ProgrammManager : MonoBehaviour
             Instantiate(ObjectToSpawn, hits[0].pose.position, ObjectToSpawn.transform.rotation);
         }
     }
+
 }
