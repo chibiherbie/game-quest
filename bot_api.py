@@ -60,7 +60,8 @@ class GameResource(Resource):
         return jsonify(data)
 
     def post(self):
-        pass
+        args = parser.parse_args()
+        print(args)
 
 
 def main():

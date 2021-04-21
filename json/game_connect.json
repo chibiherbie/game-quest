@@ -1,6 +1,6 @@
 {
   "user_id": "qwerty",
-  "time": "",
+  "time": 5,
   "level": 0,
-  "items": []
+  "items": ["sdf", "sdf"]
 }

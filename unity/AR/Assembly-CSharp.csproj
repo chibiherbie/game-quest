@@ -56,6 +56,8 @@
     <Compile Include="Assets\Script\ProgrammManager.cs" />
     <Compile Include="Assets\Script\use_api.cs" />
     <Compile Include="Assets\Script\HttpRequest.cs" />
+    <Compile Include="Assets\Script\PostStruct.cs" />
+    <Compile Include="Assets\Script\SceneLoading.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
