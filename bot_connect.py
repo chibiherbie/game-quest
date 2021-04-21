@@ -8,7 +8,6 @@ from send_msg import s_m, s_m_admin, s_m_photo
 from bots import bot_journalist
 
 
-
 # Отношения с игроком
 relationships_bot_police, relationships_bot_criminalist = 0, 0
 
@@ -134,7 +133,7 @@ def game(const):
 
 
 def main():
-    with open('const_game.json', encoding='utf-8') as file:
+    with open('json/const_game.json', encoding='utf-8') as file:
         data = json.load(file)['Молокова']  # input()
     game(data)
 

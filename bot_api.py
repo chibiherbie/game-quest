@@ -17,21 +17,21 @@ api = Api(app)
 
 class BotsResource(Resource):
     def get(self, bot):
-        with open('connect.json') as f:
+        with open('json/main_connect.json') as f:
             data = json.load(f)
         return jsonify(data[bot])
 
     def post(self, bot):
         args = parser.parse_args()
 
-        with open('connect.json') as file:
+        with open('json/main_connect.json') as file:
             data = json.load(file)
 
             data[bot]['isActive'] = args['isActive']
             data[bot]['num_block'] = args["num_block"]
             data[bot]['text'] = args["text"]
 
-        with open('connect.json', 'w') as file:
+        with open('json/main_connect.json', 'w') as file:
             json.dump(data, file, ensure_ascii=False, indent=2)
 
     # перезагружаем файл связи
@@ -49,12 +49,23 @@ class BotsResource(Resource):
             "text": ""
           }
         }
-        with open('connect.json') as f:
+        with open('json/main_connect.json') as f:
             json.dump(bots, f)
+
+
+class GameResource(Resource):
+    def get(self):
+        with open('json/game_connect.json') as f:
+            data = json.load(f)
+        return jsonify(data)
+
+    def post(self):
+        pass
 
 
 def main():
     api.add_resource(BotsResource, '/api/<bot>')
+    api.add_resource(GameResource, '/api/game')
     app.run()
 
 
