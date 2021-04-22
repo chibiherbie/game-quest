@@ -13,12 +13,17 @@ public class SceneLoading : MonoBehaviour
 
     public HttpRequest load;
 
+    float progress = 0;
+
+    public GameObject TextInfo;
+
     void Start()
     {
         load.Start();
         SceneID = load.Id;
         Debug.Log(SceneID);
 
+        TextInfo.SetActive(false);
     }
 
     private void Update()
@@ -32,6 +37,27 @@ public class SceneLoading : MonoBehaviour
         {
             Debug.Log(SceneID);
             SceneID = load.Id;
+
+            if (progress < 0.3)
+            {
+                progress += 0.003f;
+                loadingImage.fillAmount = progress;
+            }
+        }
+
+        switch (Application.internetReachability)
+        {
+            case NetworkReachability.ReachableViaLocalAreaNetwork:
+                Debug.Log("Internet connection");
+                TextInfo.SetActive(false);
+                load.Start();
+                break;
+
+            default:
+                Debug.Log("No internet connection");
+                TextInfo.GetComponent<Text>().text = "No internet";
+                TextInfo.SetActive(true);
+                break;
         }
     }
 
@@ -41,9 +67,10 @@ public class SceneLoading : MonoBehaviour
     
         while (!operation.isDone)
         {
-            float progress = operation.progress / 0.9f;
+            progress = operation.progress / 0.9f;
             loadingImage.fillAmount = progress;
             yield return null;
+
         }
     }
 }
