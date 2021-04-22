@@ -2,7 +2,6 @@ from flask_restful import reqparse, abort, Api, Resource
 from flask import Flask, jsonify
 import json
 
-from _data import db_session
 from flask_restful import reqparse
 
 parser = reqparse.RequestParser()
@@ -13,6 +12,12 @@ parser.add_argument('text', required=True)
 
 app = Flask(__name__)
 api = Api(app)
+
+
+# без этого не хотело работать
+@app.route('/')
+def index():
+    return 'empty'
 
 
 class BotsResource(Resource):

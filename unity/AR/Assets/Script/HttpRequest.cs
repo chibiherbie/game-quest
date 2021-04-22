@@ -73,16 +73,33 @@ namespace API
 
             request.uploadHandler = uploadHandler;
 
-            Debug.Log("DDD");
-
             request.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
 
-            yield return request.SendWebRequest();
+            yield return request.SendWebRequest();  
         }
 
         public void LoadField()
         {
-            itemJson = JsonUtility.FromJson<PostStruct>(File.ReadAllText(Application.streamingAssetsPath + "/config.json"));
+            Debug.Log("PATH: " + Application.streamingAssetsPath + "  " + Application.dataPath);
+
+            string conn = Path.Combine(Application.dataPath, "config.json");
+            string filepath = (Application.persistentDataPath + "cconfig.json");
+
+            WWW dbPath = new WWW(conn);
+
+            while (!dbPath.isDone) { }
+            if (!string.IsNullOrEmpty(dbPath.error))
+            {
+                //handle www error?
+                Debug.Log("ERROR?");
+            }
+            else
+            {
+                string bytes = dbPath.text;
+                itemJson = JsonUtility.FromJson<PostStruct>(bytes);
+                //do something with the data
+            }
+           
         }
     }
 }

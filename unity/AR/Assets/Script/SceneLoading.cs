@@ -11,7 +11,7 @@ public class SceneLoading : MonoBehaviour
     public Image loadingImage;
     public int SceneID;
 
-    public API.HttpRequest load;
+    public HttpRequest load;
 
     void Start()
     {

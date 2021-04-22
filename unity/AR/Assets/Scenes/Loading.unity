@@ -423,14 +423,14 @@ RectTransform:
   m_GameObject: {fileID: 297576974}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.27, y: 1.16, z: 1}
   m_Children: []
   m_Father: {fileID: 296587849}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0021972656, y: -0.0005493164}
+  m_AnchoredPosition: {x: -0.0021972656, y: -0.00048828125}
   m_SizeDelta: {x: 0.5999756, y: -0.9000244}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &297576976
@@ -726,7 +726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9100cd8ec87abb4ba254ab3a26c86db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: http://127.0.0.1:5000/api/game
+  url: https://chibiherbie.pythonanywhere.com/gg
   itemJson:
     user_id: 
     time: 0
