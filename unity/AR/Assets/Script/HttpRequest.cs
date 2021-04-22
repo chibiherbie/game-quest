@@ -13,7 +13,7 @@ namespace API
     public class HttpRequest : MonoBehaviour
     {
 
-        [SerializeField] private string url;
+        [SerializeField] public string url;
 
         public PostStruct itemJson;
         private PostStruct response;
@@ -49,6 +49,21 @@ namespace API
             {
                 Id = 2;
             }
+        }
+
+        public void GetApi()
+        {
+            StartCoroutine(Get());
+        }
+
+        private IEnumerator Get()
+        {
+            Debug.Log("LOAD");
+            UnityWebRequest request = UnityWebRequest.Get("https://chibiherbie.pythonanywhere.com/gg");
+
+
+            yield return request.SendWebRequest();
+            response = JsonUtility.FromJson<PostStruct>(request.downloadHandler.text);
         }
 
         public IEnumerator PostRequest()
@@ -99,7 +114,6 @@ namespace API
                 itemJson = JsonUtility.FromJson<PostStruct>(bytes);
                 //do something with the data
             }
-           
         }
     }
 }

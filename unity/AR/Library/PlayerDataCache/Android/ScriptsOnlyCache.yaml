@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - API.HttpRequest
+    - Menu
     - ProgrammManager
     - SceneLoading
     Unity.Rider.Editor.dll:
@@ -42,6 +43,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.InputField
     - UnityEngine.UI.Text
   sceneClasses:
     Assets/Scenes/Level.unity:
@@ -66,6 +68,8 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 1520}
+    - Class: 114
       Script: {instanceID: 2660}
     - Class: 114
       Script: {instanceID: 5054}
@@ -78,6 +82,8 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
       Script: {instanceID: 0}
     - Class: 222
       Script: {instanceID: 0}
@@ -160,15 +166,21 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 1520}
+    - Class: 114
       Script: {instanceID: 2466}
     - Class: 114
       Script: {instanceID: 2660}
+    - Class: 114
+      Script: {instanceID: 2706}
     - Class: 114
       Script: {instanceID: 5054}
     - Class: 114
       Script: {instanceID: 5342}
     - Class: 114
       Script: {instanceID: 5796}
+    - Class: 114
+      Script: {instanceID: 22678}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -176,6 +188,8 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
       Script: {instanceID: 0}
     - Class: 222
       Script: {instanceID: 0}
@@ -1299,6 +1313,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: bfe75b0469415bacf303fc2a6ec30d39
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Menu
   platform: 13
   scenePathNames:
   - Assets/Scenes/Loading.unity
