@@ -19,7 +19,7 @@ public class levels : MonoBehaviour
 
  
     private PostStruct response;
-    private string url = "https://chibiherbie.pythonanywhere.com/gg";
+    private string url = "https://chibiherbie.pythonanywhere.com/api/game";
     private int IdScene = 0;
     private int[] levelId;
 

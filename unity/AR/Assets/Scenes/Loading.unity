@@ -807,7 +807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9100cd8ec87abb4ba254ab3a26c86db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: https://chibiherbie.pythonanywhere.com/gg
+  url: https://chibiherbie.pythonanywhere.com/api/game
   itemJson:
     user_id: 
     time: 0

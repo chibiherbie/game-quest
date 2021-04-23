@@ -61,7 +61,7 @@ namespace API
         private IEnumerator Get()
         {
             Debug.Log("LOAD");
-            UnityWebRequest request = UnityWebRequest.Get("https://chibiherbie.pythonanywhere.com/gg");
+            UnityWebRequest request = UnityWebRequest.Get("https://chibiherbie.pythonanywhere.com/api/game");
 
 
             yield return request.SendWebRequest();

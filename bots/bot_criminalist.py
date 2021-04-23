@@ -24,7 +24,7 @@ async def said(message: types.Message):
             await asyncio.sleep(2)
             await bot.send_message(message.chat.id, criminalist_info[num][i][1], reply_markup=markup_remove)
 
-            post(f'http://127.0.0.1:5000/api/bot_connect', json={
+            post(f'{config.URL_B}/bot_connect', json={
                 "isActive": True,
                 "num_block": criminalist_info[num][i][2],
                 "text": ''})
@@ -36,7 +36,7 @@ async def get_start():
     global num
 
     while True:
-        bot_data = get(f'http://127.0.0.1:5000/api/bot_criminalist').json()
+        bot_data = get(f'{config.URL_B}/bot_criminalist').json()
         if bot_data['isActive']:
             num = bot_data['num_block']
 
@@ -49,7 +49,7 @@ async def get_start():
 
             markup.add(item1, item2, item3, item4)
 
-            post(f'http://127.0.0.1:5000/api/bot_criminalist', json={
+            post(f'{config.URL_B}/bot_criminalist', json={
                 "isActive": False,
                 "num_block": num,
                 "text": 'text'})

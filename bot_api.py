@@ -9,9 +9,16 @@ parser.add_argument('isActive', required=True, type=bool)
 parser.add_argument('num_block', required=True, type=int)
 parser.add_argument('text', required=True)
 
+parser_game = reqparse.RequestParser()
+parser_game.add_argument('user_id', required=True, type=str)
+parser_game.add_argument('time', required=True, type=int)
+parser_game.add_argument('level', required=True, type=int)
+parser_game.add_argument('items', required=True, type=list)
+
 
 app = Flask(__name__)
 api = Api(app)
+
 
 
 # без этого не хотело работать
@@ -41,21 +48,11 @@ class BotsResource(Resource):
 
     # перезагружаем файл связи
     def delete(self, bot):
-        bots = {
-          "bot_police": {
-            "num_block": 0,
-            "text": "",
-            "isActive": False
-          },
-          "bot_admin": {},
-          "bot_connect": {
-            "num_block": 0,
-            "isActive": False,
-            "text": ""
-          }
-        }
-        with open('json/main_connect.json') as f:
-            json.dump(bots, f)
+        with open('json/main_connnect-clear.json') as file:
+            bots = json.load(file)
+
+        with open('json/main_connect.json', 'w') as file:
+            json.dump(bots, file, ensure_ascii=False, indent=2)
 
 
 class GameResource(Resource):
@@ -65,8 +62,18 @@ class GameResource(Resource):
         return jsonify(data)
 
     def post(self):
-        args = parser.parse_args()
-        print(args)
+        args = parser_game.parse_args()
+
+        with open('json/game_connect.json') as file:
+            data = json.load(file)
+
+            data['user_id'] = args['user_id']
+            data['time'] = args["time"]
+            data['level'] = args["level"]
+            data['items'] = args["items"]
+
+        with open('json/game_connect.json', 'w') as file:
+            json.dump(data, file, ensure_ascii=False, indent=2)
 
 
 def main():

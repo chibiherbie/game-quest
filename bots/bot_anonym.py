@@ -25,7 +25,7 @@ async def said(message: types.Message):
             await asyncio.sleep(2)
             await bot.send_message(message.chat.id, anonym_info[num][i][1], reply_markup=markup_remove)
 
-            post(f'http://127.0.0.1:5000/api/bot_connect', json={
+            post(f'{config.URL_B}/bot_connect', json={
                 "isActive": True,
                 "num_block": anonym_info[num][i][2],
                 "text": ''})
@@ -37,7 +37,7 @@ async def get_start():
     global num
 
     while True:
-        bot_data = get(f'http://127.0.0.1:5000/api/bot_anonym').json()
+        bot_data = get(f'{config.URL_B}/bot_anonym').json()
         if bot_data['isActive']:
             num = bot_data['num_block']
 
@@ -48,7 +48,7 @@ async def get_start():
 
             markup.add(item1, item2)
 
-            post(f'http://127.0.0.1:5000/api/bot_anonym', json={
+            post(f'{config.URL_B}/bot_anonym', json={
                 "isActive": False,
                 "num_block": num,
                 "text": 'text'})

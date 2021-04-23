@@ -15,14 +15,14 @@ logging.basicConfig(level=logging.INFO)
 
 
 def post_info(bot, num, text, active=True):
-    post(f'http://127.0.0.1:5000/api/{bot}', json={
+    post(f'https://chibiherbie.pythonanywhere.com/api/{bot}', json={
         "isActive": active,
         "num_block": num,
         "text": text})
 
 
 def get_info(bot):
-    return get(f'http://127.0.0.1:5000/api/{bot}').json()
+    return get(f'https://chibiherbie.pythonanywhere.com/api/{bot}').json()
 
 
 def wait_answer():
@@ -39,7 +39,7 @@ def game(const):
     global relationships_bot_criminalist
 
     # очищаем остатки прошлой игры
-    delete('http://127.0.0.1:5000/api/bot_connect')
+    delete('https://chibiherbie.pythonanywhere.com/api/bot_connect')
 
     s_m_admin('ИГРА НАЧАЛАСЬ')  # сообщенпия для админа
 
@@ -130,6 +130,10 @@ def game(const):
     if time_talk_answer:
         s_m('Совсем забыл сказать, что мы ограничены по времени и работать нужно как можно быстрее,'
             ' иначе приедут федералы и будет худо\nУ тебя на все дела осталось 15 мин', config.TOKEN_POLICE)
+
+    # идёт таймер, где ждём позицию от игрока..
+    # если приходит раньше, запускаем уровень
+    # если опаздывает, то запусскаем время поиска
 
 
 def main():
