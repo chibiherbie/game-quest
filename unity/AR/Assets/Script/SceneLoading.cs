@@ -29,7 +29,7 @@ public class SceneLoading : MonoBehaviour
     private void Update()
     {
         if (SceneID != 0)
-        {
+        {               
             StartCoroutine(AsyncLoad());
         }
      
@@ -53,6 +53,12 @@ public class SceneLoading : MonoBehaviour
                 load.Start();
                 break;
 
+            case NetworkReachability.ReachableViaCarrierDataNetwork:
+                Debug.Log("Internet connection");
+                TextInfo.SetActive(false);
+                load.Start();
+                break;
+
             default:
                 Debug.Log("No internet connection");
                 TextInfo.GetComponent<Text>().text = "No internet";
@@ -66,8 +72,12 @@ public class SceneLoading : MonoBehaviour
         AsyncOperation operation = SceneManager.LoadSceneAsync(SceneID);
     
         while (!operation.isDone)
-        {
-            progress = operation.progress / 0.9f;
+        {   
+            if (operation.progress > progress)
+            {
+                progress = operation.progress / 0.9f;
+            }
+
             loadingImage.fillAmount = progress;
             yield return null;
 

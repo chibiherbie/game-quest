@@ -6,6 +6,8 @@ using API;
 using Default;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using System.IO;
+using System;
 
 public class Menu : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class Menu : MonoBehaviour
     public GameObject textError;
     private PostStruct response;
     private HttpRequest con;
+    private string savePath;
 
 
     // Start is called before the first frame update
@@ -24,6 +27,8 @@ public class Menu : MonoBehaviour
         textLoad.SetActive(false);
         textError.SetActive(false);
         theName = "";
+
+        StartCoroutine(Get());
     }
 
     // Update is called once per frame
@@ -31,7 +36,7 @@ public class Menu : MonoBehaviour
     {
         if (response.user_id != theName && theName != "")
         {
-            Debug.Log("«¿√–”« ¿");
+
             Debug.Log(response.user_id);
             if (response.user_id == "")
             {
@@ -45,10 +50,16 @@ public class Menu : MonoBehaviour
             
 
         }
-        else if (response.user_id == theName) {
+        else if (response.user_id == theName && theName != "") {
+
+
+            Debug.Log("«¿œ»—‹ ¬ ‘¿…À" + response.user_id);
+            SaveField(response.user_id);
+
             textError.SetActive(false);
             textLoad.GetComponent<Text>().text = "”ÒÔÂ¯ÌÓ";
-            SceneManager.LoadScene(3);  
+
+            SceneManager.LoadScene(2);
         }
     }
 
@@ -57,6 +68,7 @@ public class Menu : MonoBehaviour
     {
         Debug.Log("SEND");
         response.user_id = "";
+        textError.SetActive(false);
 
         theName = InputFields.GetComponent<Text>().text;
 
@@ -74,5 +86,43 @@ public class Menu : MonoBehaviour
         yield return request.SendWebRequest();
         response = JsonUtility.FromJson<PostStruct>(request.downloadHandler.text);
         Debug.Log(response.user_id);
+    }
+
+    public void SaveField(string ID)
+    {
+        try
+        {   
+            Debug.Log("--- PATH ON SAVE: " + savePath + ID);
+
+            string[] arr = { "asd", "asd" };
+            PostStruct file = new PostStruct
+            {
+                user_id = ID,
+                time = 0,
+                level = 0,
+                items = arr
+            };
+
+            //itemJson.user_id = ID;
+
+            //WWW dbPath = new WWW(conn);
+
+            File.WriteAllText(savePath, JsonUtility.ToJson(file, true));
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+    }
+
+    private void Awake()
+    {
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+        savePath = Path.Combine(Application.persistentDataPath, "config.json");
+#else
+        savePath = Path.Combine(Application.dataPath, "config.json");
+#endif
+
     }
 }

@@ -19,6 +19,8 @@ namespace API
         private PostStruct response;
         public int Id;
 
+        private string savePath;
+
         public void Start()
         {
             Debug.Log("START");
@@ -95,24 +97,46 @@ namespace API
 
         public void LoadField()
         {
-            Debug.Log("PATH: " + Application.streamingAssetsPath + "  " + Application.dataPath);
+            Debug.Log("PATH: " + Application.streamingAssetsPath + "  " + Application.dataPath + "   " + Application.persistentDataPath);
 
-            string conn = Path.Combine(Application.dataPath, "config.json");
-            string filepath = (Application.persistentDataPath + "cconfig.json");
+#if UNITY_ANDROID && !UNITY_EDITOR
+        savePath = Path.Combine(Application.persistentDataPath, "config.json");
+#else
+        savePath = Path.Combine(Application.dataPath, "config.json");
+#endif
 
-            WWW dbPath = new WWW(conn);
+            string json = File.ReadAllText(savePath);
 
-            while (!dbPath.isDone) { }
-            if (!string.IsNullOrEmpty(dbPath.error))
+            itemJson = JsonUtility.FromJson<PostStruct>(json);
+            Debug.Log("---PATH ON LOAD: " + savePath);
+        }
+
+        public void SaveField(string IDUser)
+        {
+            try
             {
-                //handle www error?
-                Debug.Log("ERROR?");
+                string conn = Path.Combine(Application.dataPath, "config.json");
+
+                Debug.Log(conn + IDUser);
+
+                string[] arr = { "asd", "asd" };
+                PostStruct file = new PostStruct
+                {
+                    user_id = IDUser,
+                    time = 0,
+                    level = 0,
+                    items = arr
+                };
+
+                
+
+                WWW dbPath = new WWW(conn);
+
+                //File.WriteAllText(conn, JsonUtility.ToJson(file, true));
             }
-            else
+            catch (Exception e)
             {
-                string bytes = dbPath.text;
-                itemJson = JsonUtility.FromJson<PostStruct>(bytes);
-                //do something with the data
+                Debug.Log(e);
             }
         }
     }

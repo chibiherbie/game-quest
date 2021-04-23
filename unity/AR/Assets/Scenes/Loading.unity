@@ -794,7 +794,7 @@ MonoBehaviour:
   loadingImage: {fileID: 1815559570}
   SceneID: 0
   load: {fileID: 1667138739}
-  TextInfo: {fileID: 0}
+  TextInfo: {fileID: 1021988097}
 --- !u!114 &1667138739
 MonoBehaviour:
   m_ObjectHideFlags: 0

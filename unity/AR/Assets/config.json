@@ -1,6 +1,9 @@
 {
-  "user_id": "",
-  "time": 1,
-  "level": 1,
-  "items": ["asd", "sdf"]
+    "user_id": "qwerty",
+    "time": 0,
+    "level": 0,
+    "items": [
+        "asd",
+        "asd"
+    ]
 }
