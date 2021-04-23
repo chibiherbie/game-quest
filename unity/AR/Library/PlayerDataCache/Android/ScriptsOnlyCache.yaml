@@ -5,6 +5,10 @@ ScriptsOnlyBuild:
     - Menu
     - ProgrammManager
     - SceneLoading
+    - levels
+    Unity.CollabProxy.Editor.dll:
+    - Unity.Cloud.Collaborate.UserInterface.CollaborateWindow
+    - Unity.Cloud.Collaborate.UserInterface.WindowCache
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.XR.ARCore.Editor.dll:
@@ -40,6 +44,7 @@ ScriptsOnlyBuild:
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
@@ -70,11 +75,19 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1520}
     - Class: 114
+      Script: {instanceID: 2466}
+    - Class: 114
       Script: {instanceID: 2660}
+    - Class: 114
+      Script: {instanceID: 2924}
     - Class: 114
       Script: {instanceID: 5054}
     - Class: 114
       Script: {instanceID: 5342}
+    - Class: 114
+      Script: {instanceID: 5796}
+    - Class: 114
+      Script: {instanceID: 21646}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1319,6 +1332,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: b8cec6dd2c45dd30f1b640054c6d7f96
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: levels
   platform: 13
   scenePathNames:
   - Assets/Scenes/Loading.unity
