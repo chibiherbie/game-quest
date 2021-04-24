@@ -11,7 +11,7 @@ bot = Bot(token=config.TOKEN_CRIMINALIST)
 dp = Dispatcher(bot)
 
 # переменная для выбора блока из сюжета
-num = 0, 0
+num = 0
 
 logging.basicConfig(level=logging.INFO)
 
@@ -30,6 +30,25 @@ async def said(message: types.Message):
                 "text": ''})
             return
     await bot.send_message(message.chat.id, choice(criminalist_info[-1]))
+
+
+@dp.message_handler(content_types=['location'])
+async def location(message: types.location):
+    # если игрок на назначеном месте, то даём возможность искать улики
+    if 56.044442 < message.location.latitude < 56.044615 and 92.907706 < message.location.longitude < 92.911031:
+        # print('На месте')
+
+        markup_remove = types.ReplyKeyboardRemove()
+
+        post(f'{config.URL_B}/bot_connect', json={
+            "isActive": True,
+            "num_block": 0,
+            "text": 'isPosition'})
+
+        await bot.send_message(message.chat.id, 'Так держать, можешь начинать исследовать', reply_markup=markup_remove)
+        return
+    # print(message.location)
+    await bot.send_message(message.chat.id, 'Ты ещё не на месте, давай поторопись')
 
 
 async def get_start():

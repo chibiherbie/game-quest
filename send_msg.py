@@ -1,6 +1,8 @@
 import config
 import asyncio
 from aiogram import Bot
+from aiogram import Bot, Dispatcher, executor, types
+
 
 # глобальная переменная
 bot = Bot(token=config.TOKEN_POLICE)
@@ -21,6 +23,25 @@ def s_m(msg, token_id=''):
 
     send = asyncio.get_event_loop()
     send.run_until_complete(send_bot(msg))
+
+
+# ---- send message for bots ----
+async def send_bot_pos(m, btn):
+    await bot.send_message(config.ID_PERSON, m, reply_markup=btn)
+
+
+def s_m_pos(msg, token_id=''):
+    global bot
+
+    # если новый TOKEN
+    if token_id:
+        bot = Bot(token=token_id)
+
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)  # создание клавиатуры
+    markup.add(types.KeyboardButton('Отправить свою гео', request_location=True))
+
+    send = asyncio.get_event_loop()
+    send.run_until_complete(send_bot_pos(msg, markup))
 
 
 # ---- send message for admin ----

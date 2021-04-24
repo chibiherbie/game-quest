@@ -4,7 +4,7 @@ from requests import get, post, delete
 import logging
 
 import config
-from send_msg import s_m, s_m_admin, s_m_photo
+from send_msg import s_m, s_m_admin, s_m_photo, s_m_pos
 from bots import bot_journalist
 
 
@@ -15,22 +15,35 @@ logging.basicConfig(level=logging.INFO)
 
 
 def post_info(bot, num, text, active=True):
-    post(f'https://chibiherbie.pythonanywhere.com/api/{bot}', json={
+    post(f'{config.URL_B}/{bot}', json={
         "isActive": active,
         "num_block": num,
         "text": text})
 
 
 def get_info(bot):
-    return get(f'https://chibiherbie.pythonanywhere.com/api/{bot}').json()
+    return get(f'{config.URL_B}/{bot}').json()
 
 
 def wait_answer():
     while True:
         data = get_info('bot_connect')
+
         if data['isActive']:
             post_info('bot_connect', 0, '', False)
             return data['num_block']
+        sleep(1)
+
+
+def timer(time):  # time  минутах
+    for i in range(time * 60, 1, -1):  # 900сек = 15 мин
+        if i == 900 or i == 600 or i == 300 or i == 60:  # оповещение для админа
+            s_m_admin(str(i // 60) + 'мин')
+
+        if get_info('bot_connect')['text'] == 'isPosition':
+            print('На позиции')
+            break
+
         sleep(1)
 
 
@@ -39,7 +52,9 @@ def game(const):
     global relationships_bot_criminalist
 
     # очищаем остатки прошлой игры
-    delete('https://chibiherbie.pythonanywhere.com/api/bot_connect')
+    delete(f'{config.URL_B}/bot_connect')
+
+    sleep(2)
 
     s_m_admin('ИГРА НАЧАЛАСЬ')  # сообщенпия для админа
 
@@ -135,11 +150,18 @@ def game(const):
     # если приходит раньше, запускаем уровень
     # если опаздывает, то запусскаем время поиска
 
+    s_m_pos('Жду от тебя сообщение, когда прибудешь на место приступление', config.TOKEN_CRIMINALIST)
+    timer(10)  # на 10 минут
+
 
 def main():
     with open('json/const_game.json', encoding='utf-8') as file:
         data = json.load(file)['Молокова']  # input()
-    game(data)
+
+    s_m_pos('Жду сообшение', config.TOKEN_CRIMINALIST)
+    timer(10)
+    print('таймер вышел')
+    # game(data)
 
 
 if __name__ == '__main__':
