@@ -28,7 +28,7 @@ parser_time.add_argument('level', required=True, type=int)
 app = Flask(__name__)
 api = Api(app)
 
-TIME = 0
+TIME, TIME_SEC = 0, 0
 
 
 # без этого не хотело работать
@@ -81,7 +81,7 @@ class GameResource(Resource):
             # t = f'{t[0]}:{t[1]}'
             # t = sum(int(i) * 60 ** index for index, i in enumerate(t.split(":")[::-1]))  # переводим в секунды
 
-            data['time'] = data['time'] - t
+            data['time'] = TIME_SEC - t
             if data['time'] <= 0:
                 data['time'] = 0
                 data['level'] = 0
@@ -107,7 +107,7 @@ class GameResource(Resource):
             json.dump(data, file, ensure_ascii=False, indent=2)
 
     def put(self):
-        global TIME
+        global TIME, TIME_SEC
 
         args = parser_time.parse_args()
 
@@ -119,6 +119,8 @@ class GameResource(Resource):
 
             data['time'] = args["time"] * 60
             data['level'] = args["level"]
+
+        TIME_SEC = data['time']
 
         with open('json/game_connect.json', 'w') as file:
             json.dump(data, file, ensure_ascii=False, indent=2)

@@ -155,12 +155,19 @@ def game(const):
 
     # запускаеся таймер для уровня
     put(f'{config.URL_B}/game', json={'time': 20, 'level': 1}).json()
+    sleep(20 * 60)
 
 
 def main():
     with open('json/const_game.json', encoding='utf-8') as file:
         data = json.load(file)['Молокова']  # input()
     print(get(f'{config.URL_B}/game').json())
+    # put(f'{config.URL_B}/game', json={'time': 1, 'level': 1})
+    #
+    # sleep(40)
+    #
+    # print(get(f'{config.URL_B}/game').json())
+
 
     #game(data)
 
