@@ -1,3 +1,5 @@
+import json
+
 from aiogram import Bot, Dispatcher, executor, types
 import asyncio
 from random import choice
@@ -34,19 +36,23 @@ async def said(message: types.Message):
 
 @dp.message_handler(content_types=['location'])
 async def location(message: types.location):
+    with open('../json/const_game.json', encoding='utf-8') as file:
+        data = json.load(file)
+    print(data)
     # если игрок на назначеном месте, то даём возможность искать улики
-    if 56.044442 < message.location.latitude < 56.044615 and 92.907706 < message.location.longitude < 92.911031:
-        # print('На месте')
+    for coor in data['Молокова']['square_coor']:
+        if coor[0] < message.location.latitude < coor[1] and coor[2] < message.location.longitude < coor[3]:
+            # print('На месте')
 
-        markup_remove = types.ReplyKeyboardRemove()
+            markup_remove = types.ReplyKeyboardRemove()
 
-        post(f'{config.URL_B}/bot_connect', json={
-            "isActive": True,
-            "num_block": 0,
-            "text": 'isPosition'})
+            post(f'{config.URL_B}/bot_connect', json={
+                "isActive": True,
+                "num_block": 0,
+                "text": 'isPosition'})
 
-        await bot.send_message(message.chat.id, 'Так держать, можешь начинать исследовать', reply_markup=markup_remove)
-        return
+            await bot.send_message(message.chat.id, 'Так держать, можешь начинать исследовать', reply_markup=markup_remove)
+            return
     # print(message.location)
     await bot.send_message(message.chat.id, 'Ты ещё не на месте, давай поторопись')
 

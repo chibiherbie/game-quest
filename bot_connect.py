@@ -1,6 +1,6 @@
 import json
 from time import sleep
-from requests import get, post, delete
+from requests import get, post, delete, put
 import logging
 
 import config
@@ -151,17 +151,18 @@ def game(const):
     # если опаздывает, то запусскаем время поиска
 
     s_m_pos('Жду от тебя сообщение, когда прибудешь на место приступление', config.TOKEN_CRIMINALIST)
-    timer(10)  # на 10 минут
+    timer(10)  # на 10 минут, 1 левел
+
+    # запускаеся таймер для уровня
+    put(f'{config.URL_B}/game', json={'time': 20, 'level': 1}).json()
 
 
 def main():
     with open('json/const_game.json', encoding='utf-8') as file:
         data = json.load(file)['Молокова']  # input()
+    print(get(f'{config.URL_B}/game').json())
 
-    s_m_pos('Жду сообшение', config.TOKEN_CRIMINALIST)
-    timer(10)
-    print('таймер вышел')
-    # game(data)
+    #game(data)
 
 
 if __name__ == '__main__':
