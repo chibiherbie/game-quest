@@ -25,18 +25,24 @@ inline.add(inline_criminalist, inline_talks)
 inline.add(inline_fortuneteller)
 
 
-@dp.message_handler(commands=['bot'])
+@dp.message_handler(commands=['get_bot'])
 async def get_bot(message: types.Message):
     await bot.send_message(message.chat.id, 'Названия бота', reply_markup=inline)
 
 
-@dp.message_handler(commands=['game'])
-async def get_bot(message: types.Message):
+@dp.message_handler(commands=['put_game'])
+async def put_game(message: types.Message):
     global GAME
 
     GAME = True
     await bot.send_message(message.chat.id, 'Напиши время (мин) и уровень (1-5) в формате "<время> <уровень>"\n'
                                             'пример: "4 1"')
+
+
+@dp.message_handler(commands=['get_game'])
+async def get_game(message: types.Message):
+    data = get(f'{config.URL_B}/game').json()
+    await bot.send_message(message.chat.id, data)
 
 
 @dp.callback_query_handler(lambda c: c.data and c.data.startswith('bot'))
@@ -55,6 +61,8 @@ async def said(message: types.Message):
         if len(text) == 2 and int(text[0]):
             data = put(f'{config.URL_B}/game', json={'time': text[0], 'level': text[1]}).json()
             await bot.send_message(message.chat.id, data)
+        else:
+            await bot.send_message(message.chat.id, "ERROR")
 
     GAME = False
 
