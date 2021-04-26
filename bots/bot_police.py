@@ -13,6 +13,7 @@ dp = Dispatcher(bot)
 
 # переменная для выбора блока из сюжета
 num = 0
+the_end = False
 
 logging.basicConfig(level=logging.INFO)
 
@@ -29,6 +30,21 @@ async def said(message: types.Message):
                 "isActive": True,
                 "num_block": police_info[num][i][2],
                 "text": ''})
+
+        # концовка
+        elif num == 26:
+            if message.text in '':
+                if message.text == 1:
+                    post(f'{config.URL_B}/bot_connect', json={
+                        "isActive": True,
+                        "num_block": 1,
+                        "text": ''})
+                else:
+                    post(f'{config.URL_B}/bot_connect', json={
+                        "isActive": True,
+                        "num_block": 0,
+                        "text": ''})
+
             return
     await bot.send_message(message.chat.id, choice(police_info[-1]))
 
