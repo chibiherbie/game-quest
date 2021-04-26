@@ -125,7 +125,7 @@ class GameResource(Resource):
         with open('json/game_connect.json', 'w') as file:
             json.dump(data, file, ensure_ascii=False, indent=2)
 
-        return
+        return jsonify({"game": "Ок"})
 
 
 def main():
