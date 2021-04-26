@@ -1,12 +1,11 @@
 import config
 import asyncio
-from aiogram import Bot
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Bot, types
 
 
 # глобальная переменная
 bot = Bot(token=config.TOKEN_POLICE)
-bot_admin = Bot(token=config.TOKEN_POLICE)  # будет оповещать о значимых моментавх в игре
+bot_admin = Bot(token=config.TOKEN_ADMIN)  # будет оповещать о значимых моментавх в игре
 
 
 # ---- send message for bots ----
@@ -25,7 +24,7 @@ def s_m(msg, token_id=''):
     send.run_until_complete(send_bot(msg))
 
 
-# ---- send message for bots ----
+# ---- send pos for bot ----
 async def send_bot_pos(m, btn):
     await bot.send_message(config.ID_PERSON, m, reply_markup=btn)
 

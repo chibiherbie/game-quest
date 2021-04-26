@@ -47,7 +47,7 @@ async def location(message: types.location):
             markup_remove = types.ReplyKeyboardRemove()
 
             post(f'{config.URL_B}/bot_connect', json={
-                "isActive": True,
+                "isActive": False,
                 "num_block": 0,
                 "text": 'isPosition'})
 

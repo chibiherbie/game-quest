@@ -6,10 +6,12 @@ import logging
 import config
 from send_msg import s_m, s_m_admin, s_m_photo, s_m_pos
 from bots import bot_journalist
+import datetime as dt
 
 
 # Отношения с игроком
 relationships_bot_police, relationships_bot_criminalist = 0, 0
+suspect = []
 
 logging.basicConfig(level=logging.INFO)
 
@@ -35,16 +37,24 @@ def wait_answer():
         sleep(1)
 
 
-def timer(time):  # time  минутах
-    for i in range(time * 60, 1, -1):  # 900сек = 15 мин
-        if i == 900 or i == 600 or i == 300 or i == 60:  # оповещение для админа
-            s_m_admin(str(i // 60) + 'мин')
+def timer(duration):  # time  минутах
+    time_start = dt.datetime.now()
+    time = 0
+
+    while time <= duration * 60:
+        time = (dt.datetime.now() - time_start)  # разница во времени
+        time = divmod(time.days * 24 * 60 * 60 + time.seconds, 60)  # пеереводим разницу в "мин:сек"
+        time = time[0] * 60 + time[1]  # переводим в сек
+
+        if time % 60 == 0:  # оповещение для админа
+            s_m_admin('Прошло ' + str(time // 60) + ' мин от ' + str(duration))
 
         if get_info('bot_connect')['text'] == 'isPosition':
             print('На позиции')
-            break
+            post_info('bot_connect', 0, '', active=False)
+            return ['no late', round((duration * 60 - time) / 60)]
 
-        sleep(1)
+    return ['late', 0]
 
 
 def game(const):
@@ -57,7 +67,7 @@ def game(const):
     sleep(2)
 
     s_m_admin('ИГРА НАЧАЛАСЬ')  # сообщенпия для админа
-
+    '''
     # ----ВСТУПЛЕНИЕ----
 
     # Первые сообщения для подготовки игры. Моделируем ситуацию отсутсвия главного героя
@@ -73,6 +83,8 @@ def game(const):
 
     # при плохих отношениях, майор не скажет о времени, а только потом напомнит ему
     time_talk_answer = False
+
+    # ----ПЕРВОЕ УБИЙСВО----
 
     # Первая развязка (1, 2, 3)
     if relationships_bot_police >= 0:
@@ -137,7 +149,7 @@ def game(const):
 
     # криминалист, Досье
     s_m('Сосвем забыл скинуть тебе досье. Держи', config.TOKEN_CRIMINALIST)
-    s_m_photo('AgACAgIAAxkDAAIBcV8QPvYaD3u0_ZPyt8w3VdCwOqX1AAJkrjEbPNiBSCta4itSNvIxZJvfky4AAwEAAwIAA20AA2bKAgABGgQ')
+    s_m_photo(config.PHOTO_1)  # прикрепляем фото
 
     sleep(60)  # должно быть 60 = 1мин
 
@@ -145,24 +157,240 @@ def game(const):
     if time_talk_answer:
         s_m('Совсем забыл сказать, что мы ограничены по времени и работать нужно как можно быстрее,'
             ' иначе приедут федералы и будет худо\nУ тебя на все дела осталось 15 мин', config.TOKEN_POLICE)
-
+    '''
     # идёт таймер, где ждём позицию от игрока..
     # если приходит раньше, запускаем уровень
-    # если опаздывает, то запусскаем время поиска
-
+    # если опаздывает, то не ждём и запускаем уровень
+    sleep(10)
     s_m_pos('Жду от тебя сообщение, когда прибудешь на место приступление', config.TOKEN_CRIMINALIST)
-    timer(10)  # на 10 минут, 1 левел
+    game_time = timer(10)  # на 10 минут, 1 левел
 
-    # запускаеся таймер для уровня
-    put(f'{config.URL_B}/game', json={'time': 5, 'level': 1}).json()
-    sleep(5 * 60)
+    # если опоздал, запускаем таймер поиска
+    if game_time[0] == 'late':
+        s_m('Ты опаздываешь! Добирайся быстрее, время уже идёт', config.TOKEN_CRIMINALIST)
+        s_m_pos('Как придёшь, сообщи мне и запускай приложение для поиска')
+
+        game_time = timer(5)
+        if game_time[0] == 'no late':
+            put(f'{config.URL_B}/game', json={'time': game_time[1], 'level': 1}).json()
+            sleep(game_time[1] * 60)
+    else:
+        put(f'{config.URL_B}/game', json={'time': 6, 'level': 1}).json()
+        sleep(6 * 60)
+
+    sleep(10)
+
+    s_m('Походу всё... Пора уходить', config.TOKEN_POLICE)
+
+    # мини диалог (5)
+    post_info('bot_police', 5, 'Есть какие-то предположения у тебя в голове?')
+    relationships_bot_police += wait_answer()
+
+    sleep(1)
+    s_m('Теперь мы можем опросить свидетелей и друзей, может они нам что-то расскажут?')
+
+    sleep(2)
+    s_m('У нас времени не совсем много, так что ты сможешь опросить только пару человек')
+
+    # bot_police, опрос (6)
+    for _ in range(2):
+        post_info('bot_police', 6, 'Кого опрашиваем?')
+        count = wait_answer()  # выбираем кого опрашиваем
+
+        # диалоги с подозреваемыми
+        if count == 1:  # диалог - соседка с этажа (0 - 9)
+            sleep(4)
+            post_info('bot_talks', 0, 'Здравствуйте, я соседка с Этажа')
+
+            if wait_answer() == 0:  # развязка (1, 2, 3, 4)
+                post_info('bot_talks', 1, 'Но он к ней часто приходил')
+                if wait_answer() == 0:  # развязка (2, 3, 4)
+                    post_info('bot_talks', 2, 'Возможно часам к 8.30')
+                    if wait_answer() == 0:  # развязка (3, 4)
+                        post_info('bot_talks', 3, 'Через какое-то время я услышала крики')
+                        wait_answer()
+                        post_info('bot_talks', 4, 'Дальше уже не слышала, ушла')
+                        wait_answer()
+                    else:
+                        post_info('bot_talks', 4, 'Нет, в этот момент я ушла...')
+                        wait_answer()
+                else:
+                    post_info('bot_talks', 4, 'Я бы на Вашем месте опросила его и не спускала глаз!')
+                    wait_answer()
+            # развязка (4, 5, 6, 7, 8, 9)
+            else:
+                post_info('bot_talks', 5, 'Но я не уверена')
+                if wait_answer() == 0:  # развязка (4, 6, 7)
+                    post_info('bot_talks', 6, 'Она кричала на кого-то, что не любит его, но я не уверена')
+                    if wait_answer() == 0:  # развязка (4, 7)
+                        post_info('bot_talks', 7, 'Я с ней мало знакома')
+                        if wait_answer() == 0:  # развязка (4)
+                            post_info('bot_talks', 4, 'В этот момент я ушла...')
+                            wait_answer()
+                    else:
+                        post_info('bot_talks', 4, 'В этот момент я ушла...')
+                        wait_answer()
+                else:  # развязка (4, 8, 9)
+                    post_info('bot_talks', 8, 'Мне кажется, тогда она сильно ссорилась со своим парнем')
+                    if wait_answer() == 0:  # развязка (4, 9)
+                        post_info('bot_talks', 9, 'и «мне страшно одной, вдруг он придет.»')
+                        if wait_answer() == 0:
+                            post_info('bot_talks', 4, 'Я в этот момент ушла')
+                            wait_answer()
+                        else:
+                            post_info('bot_talks', 4, 'На вашем бы месте я бы его только и проверила')
+                            wait_answer()
+                    else:
+                        post_info('bot_talks', 4, 'Не знаю')
+                        wait_answer()
+
+        elif count == 2:  # диалог - сосед этажом ниже (10 - 16)
+            sleep(3)
+            post_info('bot_talks', 10, 'Здравствуйте, я сосед проживающий этажом ниже')  # отдаём через файл команду
+
+            if wait_answer() == 0:  # развязка (11, 12, 13 )
+                post_info('bot_talks', 11, 'Она мне никогда не нравилась')  # отдаём через файл команду
+                if wait_answer() == 0:  # развязка (12)
+                    post_info('bot_talks', 12, 'Однажды видел её накаченной наркотой')
+                    wait_answer()
+                else:  # развязка (12, 13 )
+                    post_info('bot_talks', 13, 'Иногда оры стоят в квартире и подобное')
+                    if wait_answer() == 0:
+                        post_info('bot_talks', 12, 'Оры стояли на весь этаж!')
+                        wait_answer()
+                    else:
+                        post_info('bot_talks', 12, 'Больше ничего не знаю')
+                        wait_answer()
+            else:  # развязка (12, 14, 15, 16)
+                post_info('bot_talks', 14, 'Стояли сильные оры на всём этаже')
+                if wait_answer() == 0:  # развязка (12, 15)
+                    post_info('bot_talks', 15, 'Кричала плохие слова кому-то')
+                    if wait_answer() == 0:
+                        post_info('bot_talks', 12, 'Больше ничего скзаать не могу')
+                        wait_answer()
+                    else:
+                        post_info('bot_talks', 12, 'Однажды она была под наркотой, может быть из-за этого')
+                        wait_answer()
+                else:  # развязка (12, 16)
+                    post_info('bot_talks', 16, 'Точно, точно')
+                    if wait_answer() == 0:
+                        post_info('bot_talks', 12, 'Но вроде он ушёл от неё часов в 8')
+                        wait_answer()
+                    else:
+                        post_info('bot_talks', 12, 'Это не точно, слух у меня плохой')
+                        wait_answer()
+
+        elif count == 3:  # диалог - лучшая подруга (17 - 23)
+            sleep(3)
+            post_info('bot_talks', 17, 'Доброе утро,  я её лучшая подруга Алина')
+            if wait_answer() == 0:  # развязка (18, 19, 20)
+                post_info('bot_talks', 18, 'Она изменилась')
+                if wait_answer() == 0:
+                    post_info('bot_talks', 19, 'С синяками под глазами и сильно похудела. Будто сильно заболела')
+                    wait_answer()
+                else:  # развязка (19, 20)
+                    post_info('bot_talks', 20, 'Не знаю...')
+                    if wait_answer() == 0:
+                        post_info('bot_talks', 19, 'Но врагов у неё не было')
+                        wait_answer()
+                    else:
+                        post_info('bot_talks', 19, 'Но я спрашивала у неё, что с ней, но она говорила всё окей')
+                        wait_answer()
+
+            else:  # развязка (19, 21, 22, 23)
+                post_info('bot_talks', 21, 'Но в какой-то момент у неё были прорблемы с парнем')
+                if wait_answer() == 0:  # развязка (19, 22)
+                    post_info('bot_talks', 22, 'И очень сильно')
+                    if wait_answer() == 0:
+                        post_info('bot_talks', 19, 'Не знаю')
+                        wait_answer()
+                    else:
+                        post_info('bot_talks', 19, 'Вполне это мог быть и он...')
+                        wait_answer()
+                else:  # развязка (19, 23)
+                    post_info('bot_talks', 23, 'Также говорила, что она кого-то боиться, и он хочет убить её')
+                    if wait_answer() == 0:
+                        post_info('bot_talks', 19, 'У них всё было хорошо...')
+                        wait_answer()
+                    else:
+                        post_info('bot_talks', 19, 'Она мало с кем контактировала')
+                        wait_answer()
+
+        else:  # диалог - Парень (24)
+            sleep(4)
+            post_info('bot_talks', 24, 'Добрый день, детектив. Я парень Лены, Олег')
+            if wait_answer() == 0:
+                post_info('bot_talks', 25, 'И мне пришлось растаться с ней')
+                if wait_answer() == 0:
+                    post_info('bot_talks', 26, 'Но я так и не узнал, что')
+                    if wait_answer() == 0:
+                        post_info('bot_talks', 27, 'Я устал и ушёл')
+                        wait_answer()
+                    else:
+                        post_info('bot_talks', 27, 'Только это')
+                        wait_answer()
+
+                else:
+                    post_info('bot_talks', 28, 'Потом сказала, что ей страшно одной, ведь он её убьет')
+                    if wait_answer() == 0:
+                        post_info('bot_talks', 27, 'Где-то так')
+                        wait_answer()
+                    else:
+                        post_info('bot_talks', 27, 'Поэтому не хотел')
+                        wait_answer()
+
+            else:
+                post_info('bot_talks', 29, 'Всегда любил её')
+                if wait_answer() == 0:
+                    post_info('bot_talks', 27, 'Мне это не понравилось')
+                    wait_answer()
+                else:
+                    post_info('bot_talks', 30, 'Говорила мне, что кто-то хочет её убить, хах')
+                    if wait_answer() == 0:
+                        post_info('bot_talks', 27, 'Поэтому и не поверил')
+                        wait_answer()
+                    else:
+                        post_info('bot_talks', 27, ' У неё не было врагов')
+                        wait_answer()
+
+    sleep(3)
+
+    # выбор подзреваемого
+    s_m('Мы узнали много нового и перед нами есть пару подозрительных личностей. '
+        'Это парень и подруга. Тебе стоит сделать выбор, кого задержать', config.TOKEN_POLICE)
+    post_info('bot_police', 7, 'Если сделаешь неправильный выбор, это может сказаться на расследовнии')
+
+    # подсказка при хороших отношениях с криминалистом
+    if relationships_bot_criminalist > 0:
+        sleep(1)
+        s_m('Просмотрев место происшествия ещё раз, мы обнаружили улику.'
+            ' Под ногтями есть кожный эпителий неизвестного мужчины..'
+            ' Возможно это что-то значит')
+
+    if wait_answer() == 0:
+        sleep(3)
+        s_m('Парень задержан\nЕго Алиби - "Я пришел к ней в восьмом часу, может, в 7:10. Ушел от нее в 7:40.'
+            '  Я не убивал ее, я ее любил, несмотря вообще ни на что!" Вам решать, врёт он или нет, но проверить '
+            'мы сможем его только потом')
+        suspect.append('Парень')
+    else:
+        sleep(3)
+        s_m('Подруга задержана\nЕё Алиби - "Я виделась с ней вчера вечером, все было хорошо. В 9 утра я была на другом'
+            ' конце города, в универе сдавала долги, можете спросить преподавателя по математике" Вам решать,'
+            ' врёт она или нет, но сообщить правду мы смоежм только позже')
+        suspect.append('Подруга, Алина')
+
+    # ----ВТОРОЕ УБИЙСТВО----
+
+    # сообщения о новом убийстве админу
+    s_m_admin('Начинается второе убийство')
 
 
 def main():
     with open('json/const_game.json', encoding='utf-8') as file:
         data = json.load(file)['Молокова']  # input()
 
-    #game(data)
+    game(data)
 
 
 if __name__ == '__main__':
