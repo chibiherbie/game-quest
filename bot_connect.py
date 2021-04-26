@@ -385,6 +385,257 @@ def game(const):
     # сообщения о новом убийстве админу
     s_m_admin('Начинается второе убийство')
 
+    sleep(10)
+    s_m('Так, сейчас нам сообщили о новом происшествие')
+    sleep(3)
+    s_m('Убит мужчина, 40 лет. Тело найдено в загородном доме района Алексеева Предположительна'
+        ' причина смерти: самоубийство, '
+        'застрелился, пуля прошла навылет с правой стороны висков')
+    sleep(1)
+    post_info('bot_police', 8, f'Время смерти: 07.07.2020, 11:30')
+
+    time_relationships = wait_answer()
+    relationships_bot_police += time_relationships
+
+    if time_relationships == -1:
+        post_info('bot_police', 9, 'Второе убийство не может быть хорошим...')
+        relationships_bot_police += wait_answer()
+
+    sleep(300)  # перед отправкой досье, 300cек = 5мин
+    s_m('Досье готово, Держи', config.TOKEN_CRIMINALIST)
+    s_m_photo(config.PHOTO_2)
+
+    sleep(120)  # перед отправкой новостей, 120сек = 2 мин
+
+    # Вторые новости, bot__journalist
+    bot_journalist.news_2()
+
+    # идёт таймер, где ждём позицию от игрока..
+    # если приходит раньше, запускаем уровень
+    # если опаздывает, то не ждём и запускаем уровень
+    sleep(10)
+    s_m_pos('Жду от тебя сообщение, когда прибудешь на место приступление', config.TOKEN_CRIMINALIST)
+    game_time = timer(15)  # на 15 минут, 1 левел
+
+    # если опоздал, запускаем таймер поиска
+    if game_time[0] == 'late':
+        s_m('Время на иссходе... Добирайся быстрее, время уже идёт', config.TOKEN_CRIMINALIST)
+        s_m_pos('Как придёшь, сообщи мне и запускай приложение для поиска!')
+
+        game_time = timer(5)
+        if game_time[0] == 'no late':
+            put(f'{config.URL_B}/game', json={'time': game_time[1], 'level': 1}).json()
+            sleep(game_time[1] * 60)
+    else:
+        put(f'{config.URL_B}/game', json={'time': 6, 'level': 1}).json()
+        sleep(6 * 60)
+
+    sleep(10)
+
+    # переход к подозреваемым
+    s_m('К нам уже приближаются, пора уходить', config.TOKEN_POLICE)
+    sleep(5)
+    s_m('Теперь пришло время опросить свидетелей и знакомых. Времени у нас также немного,'
+        ' поэтому давай быстрее, кого успеешь опросить')
+
+    # разговор с подозреваемыми
+    for _ in range(2):
+        post_info('bot_police', 10, 'Выбирай, кого вызвать')
+        count = wait_answer()  # выбираем кого опрашиваем
+
+        # диалоги с подозреваемыми
+        if count == 1:  # диалог - соседка загородного дома (31 - 35)
+            post_info('bot_talks', 31, 'Добрый день, я соседка живущая напротив')
+            if wait_answer() == 0:  # (32, 33, 34)
+                post_info('bot_talks', 32, 'Вроде чтобы побыть одному')
+                if wait_answer() == 0:
+                    post_info('bot_talks', 33, 'это было странно')
+                    if wait_answer() == 0:
+                        post_info('bot_talks', 34, 'Мы с ним мало общаемся')
+                        wait_answer()
+                    else:
+                        post_info('bot_talks', 34, 'всё было тихо')
+                        wait_answer()
+                else:
+                    post_info('bot_talks', 34, 'Больше ничего такого')
+                    wait_answer()
+            else:  # (34, 35)
+                post_info('bot_talks', 35, 'Решили постучаться, но квартира была открыта. Зашли, а там он')
+                if wait_answer() == 0:
+                    post_info('bot_talks', 34, 'Мы с ним мало общаемся')
+                    wait_answer()
+                else:
+                    post_info('bot_talks', 34,
+                              ' Только вот, что он приезжал один раз в два месяца, чтобы побыть одному')
+                    wait_answer()
+
+        elif count == 2:  # диалог - Жена (36 - 40)
+            post_info('bot_talks', 36, 'Здравствуйте. Я Алёна, жена Арсения')
+            if wait_answer() == 0:
+                post_info('bot_talks', 37, 'Я не могу сказать, кто это мог сделать')
+                if wait_answer() == 0:
+                    post_info('bot_talks', 38, 'Обычно он этого не делает')
+                    if wait_answer() == 0:
+                        post_info('bot_talks', 39, 'По типу «это все он...», а кто-он, я не знаю...')
+                        wait_answer()
+                    else:
+                        post_info('bot_talks', 39, 'Зачем ему это?')
+                        wait_answer()
+                else:
+                    post_info('bot_talks', 39, 'Это было странно, он никогда себя так вел.')
+                    wait_answer()
+            else:
+                post_info('bot_talks', 40, 'Ужас...')
+                if wait_answer() == 0:
+                    post_info('bot_talks', 39, 'Может, совсем с ума сошла?')
+                    wait_answer()
+                else:
+                    post_info('bot_talks', 39, 'Не думаю что именно сечас он решил сделать это')
+                    wait_answer()
+
+        else:  # диалог - Хозяйка мертвой собаки, жертва неудачной операции (41 - 45)
+            post_info('bot_talks', 41, 'Привет. Я хозяйка той самой мертвой собаки')
+            if wait_answer() == 0:
+                post_info('bot_talks', 42, 'Да..Точно')
+                if wait_answer() == 0:
+                    post_info('bot_talks', 45, 'И только')
+                    wait_answer()
+                else:
+                    post_info('bot_talks', 45, 'Но я не буду опускаться до убийства')
+                    wait_answer()
+
+            else:
+                post_info('bot_talks', 43, 'Не общаюсь')
+                if wait_answer() == 0:
+                    post_info('bot_talks', 45, 'Но я не буду опускаться до убийства')
+                    wait_answer()
+                else:
+                    post_info('bot_talks', 44, 'Но если возврощаться к моей собаке, то до меня дошли слухи,'
+                                               ' что он был под кайфом во время операции')
+                    if wait_answer() == 0:
+                        post_info('bot_talks', 45, 'т.к. это была большая ошибка')
+                        wait_answer()
+                    else:
+                        post_info('bot_talks', 45, 'Верить ли...')
+                        wait_answer()
+
+    sleep(3)
+
+    # выбор подозреваемого
+    s_m('Я думаю тут есть  пара подозритекльных личностей.  Жена и Хозяйка собаки')
+    post_info('bot_police', 11, 'Что думаешь, кто из них?')
+
+    if wait_answer() == 0:
+        s_m('Хм... Хорошо\nЕё алиби:  В это время я была на кладбище, мне было тяжело, я волновалась, поэтому'
+            ' пошла на могилу матери. Я всегда там бываю, когда мне плохо. И вообще, как вы смеете меня подозревать?'
+            ' Я любила его, а вовсе не желала ему смерти!»')
+
+    else:
+        s_m('Я тоже так считаю\nЕё алиби: Я была на приёме у стоматолога, с 10:40 до 11:50 включительно.»')
+
+        sleep(4)
+        # диалог с криминалистом, если отношения >= -1 (2 - )
+        if relationships_bot_criminalist >= -1:
+            post_info('bot_criminalist', 2, 'Почему ты решил выбрать её?')
+            time_relationships = wait_answer()
+            relationships_bot_criminalist += time_relationships
+
+            if time_relationships == 0:  # (3, 4, 5, 6)
+                post_info('bot_criminalist', 3, 'Чем именно?')
+                time_relationships = wait_answer()
+
+                if time_relationships == 1:
+                    post_info('bot_criminalist', 4, 'Хочу узнать, почему ты выбрал её')
+                    time_relationships = wait_answer()
+
+                    if time_relationships == 1:
+                        post_info('bot_criminalist', 5, 'Мне показалось, что такая женщина и не может врать. Она знает'
+                                                        ', что дело серьёзное и как-бы она не было зла на него, она не '
+                                                        'врала бы')
+                        time_relationships = wait_answer()
+                        relationships_bot_criminalist += time_relationships
+
+                        if time_relationships == 0:
+                            post_info('bot_criminalist', 6,
+                                      'Но она наговорила за чем-то на эту женщину. Возможно из-за'
+                                      ' страха, но выглядело это как отвод подозрения')
+                            relationships_bot_criminalist += wait_answer()
+
+                    elif time_relationships == 2:
+                        post_info('bot_criminalist', 5,
+                                  'Нам важны любые данные. Не думаю, что она это сделала для себя, '
+                                  'а не для нас. Как по мне, жена более подозрительный')
+                        time_relationships = wait_answer()
+                        relationships_bot_criminalist += time_relationships
+
+                        if time_relationships == 0:
+                            post_info('bot_criminalist', 6,
+                                      'Но она наговорила за чем-то на эту женщину. Возможно из-за'
+                                      ' страха, но выглядело это как отвод подозрения')
+                            relationships_bot_criminalist += wait_answer()
+
+                    elif time_relationships == 3:
+                        post_info('bot_criminalist', 6, 'На твоём бы месте я поменял подозреваемого')
+                        relationships_bot_criminalist += wait_answer()
+
+                    else:
+                        s_m('Я бы на твоём месте поменял мнение', config.TOKEN_CRIMINALIST)
+
+                elif time_relationships == 2:
+                    s_m('Мне показалось, что такая женщина и не может врать. Она знает, что дело серьёзное и как-бы'
+                        ' она не было зла на него, она не врала бы', config.TOKEN_CRIMINALIST)
+
+                elif time_relationships == 3:
+                    s_m('Нам важны любые данные. Не думаю, что она это сделала для себя, а не для нас',
+                        config.TOKEN_CRIMINALIST)
+
+                else:
+                    relationships_bot_criminalist += -1
+                    s_m('Я хотел только помочь... Мне кажется это не она и всё... Ладно')
+            elif time_relationships == 1:
+                post_info('bot_criminalist', 7, 'Только интуиция?')
+                time_relationships = wait_answer()
+                relationships_bot_criminalist += time_relationships
+
+                if time_relationships == 1:
+                    post_info('bot_criminalist', 8, 'Я конечно не эксперт и тд, но подумай ещё раз')
+                    time_relationships += wait_answer()
+
+        sleep(20)
+
+        # мини диалог (12, 13, 14)
+        post_info('bot_police', 12, 'Мне тут сообщили, что ты сомвневался в своём выборе. Желаешь его поменять?')
+        time_relationships = wait_answer()
+
+        relationships_bot_criminalist += time_relationships
+        if time_relationships == 0:
+            post_info('bot_police', 13, '???')
+            time_relationships = wait_answer()
+
+            if time_relationships == 1:
+                post_info('bot_police', 14, 'Но выбор за тобой')
+                time_relationships = wait_answer()
+
+                if time_relationships == -1:
+                    suspect.append("Жена")
+                    relationships_bot_police += time_relationships
+                else:
+                    suspect.append('Хозяйка собаки')
+                    relationships_bot_police += time_relationships
+
+            elif time_relationships == 2:
+                suspect.append('Жена')
+
+            else:
+                suspect.append('Хозяйка собаки')
+        else:
+            suspect.append('Хозяйка собаки')
+
+    # ----ТРЕТЬЕ УБИЙСТВО----
+
+    # сообщения о новом убийстве
+    s_m_admin('Началось третье убийство')
+
 
 def main():
     with open('json/const_game.json', encoding='utf-8') as file:
