@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637544466560062277
-    m_Hash: 1700607857
+      ticks: 637551382293356292
+    m_Hash: 3512242108
   m_LockFileStatus:
     m_FilePath: D:/game-quest/unity/AR/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637544466560582583
-    m_Hash: 3795213982
+      ticks: 637551382293376243
+    m_Hash: 226692713
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
