@@ -6,6 +6,7 @@ import logging
 
 import config
 from bots_info.police import police_info
+from text_const import edit_text
 
 
 bot = Bot(token=config.TOKEN_POLICE)
@@ -21,10 +22,10 @@ logging.basicConfig(level=logging.INFO)
 @dp.message_handler(content_types=['text'])
 async def said(message: types.Message):
     for i in range(4):
-        if message.text == police_info[num][i][0]:
+        if message.text == edit_text(police_info[num][i][0]):
             markup_remove = types.ReplyKeyboardRemove()
             await asyncio.sleep(2)
-            await bot.send_message(message.chat.id, police_info[num][i][1], reply_markup=markup_remove)
+            await bot.send_message(message.chat.id, edit_text(police_info[num][i][1]), reply_markup=markup_remove)
 
             post(f'{config.URL_B}/bot_connect', json={
                 "isActive": True,
@@ -59,10 +60,10 @@ async def get_start():
 
             markup = types.ReplyKeyboardMarkup(row_width=1, one_time_keyboard=True)  # создание клавиатуры
 
-            item1 = types.KeyboardButton(police_info[num][0][0])
-            item2 = types.KeyboardButton(police_info[num][1][0])
-            item3 = types.KeyboardButton(police_info[num][2][0])
-            item4 = types.KeyboardButton(police_info[num][3][0])
+            item1 = types.KeyboardButton(edit_text(police_info[num][0][0]))
+            item2 = types.KeyboardButton(edit_text(police_info[num][1][0]))
+            item3 = types.KeyboardButton(edit_text(police_info[num][2][0]))
+            item4 = types.KeyboardButton(edit_text(police_info[num][3][0]))
 
             markup.add(item1, item2, item3, item4)
 

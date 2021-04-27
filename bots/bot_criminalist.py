@@ -38,7 +38,7 @@ async def said(message: types.Message):
 async def location(message: types.location):
     with open('../json/const_game.json', encoding='utf-8') as file:
         data = json.load(file)
-    print(data)
+
     # если игрок на назначеном месте, то даём возможность искать улики
     for coor in data['Молокова']['square_coor']:
         if coor[0] < message.location.latitude < coor[1] and coor[2] < message.location.longitude < coor[3]:
