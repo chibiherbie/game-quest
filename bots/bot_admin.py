@@ -1,6 +1,6 @@
 import json
 from aiogram import Bot, Dispatcher, executor, types
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, BotCommand
 from requests import get, post, put, delete
 import logging
 
@@ -45,6 +45,12 @@ async def get_game(message: types.Message):
     await bot.send_message(message.chat.id, data)
 
 
+@dp.message_handler(commands=['del_bot'])
+async def del_game(message: types.Message):
+    delete(f'{config.URL_B}/bot_connect')
+    await bot.send_message(message.chat.id, 'Ок')
+
+
 @dp.callback_query_handler(lambda c: c.data and c.data.startswith('bot'))
 async def callback_get_bot(callback_query: types.CallbackQuery):
     data = get(f'{config.URL_B}/{callback_query.data}').json()
@@ -66,5 +72,16 @@ async def said(message: types.Message):
 
     GAME = False
 
+
+async def set_commands(bot: Bot):
+    commands = [
+        BotCommand(command="/get_bot", description="Get запрос бота"),
+        BotCommand(command="/del_bot", description="Очистка всех ботов"),
+        BotCommand(command="/get_game", description="Get запрос игры"),
+        BotCommand(command="/put_game", description="Запуск игры")
+    ]
+    await bot.set_my_commands(commands)
+
 if __name__ == '__main__':
+    dp.loop.create_task(set_commands(bot))
     executor.start_polling(dp, skip_updates=True)
