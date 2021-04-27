@@ -7,13 +7,20 @@ import json
 import config
 from send_msg import s_m, s_m_admin, s_m_photo, s_m_pos
 from bots import bot_journalist
-from bots import bot_journalist
 
 
 # Отношения с игроком
 relationships_bot_police, relationships_bot_criminalist = 0, 0
 # подозреваемые со всей игры
 suspect = []
+
+PHOTO_1 = 'AgACAgIAAxkDAAIBcV8QPvYaD3u0_ZPyt8w3VdCwOqX1AAJkrjEbPNiBSCta4itSNvIxZJvfky4AAwEAAwIAA20AA2bKAgABGgQ'
+PHOTO_2 = 'AgACAgIAAxkDAAIBcl8QPvfIUXWjneqA4r78pJjMLBdBAAJlrjEbPNiBSDGYrVxwYlWZ5k71lC4AAwEAAwIAA3kAA-T_AQABGgQ'
+PHOTO_3 = 'AgACAgIAAxkDAAIBc18QPvf3QXgY7CHgfaCLfWvzvXfgAAJmrjEbPNiBSIrzaHZbLVRcLP7ski4AAwEAAwIAA3kAAzHXAwABGgQ'
+PHOTO_4 = 'AgACAgIAAxkDAAIBsV8QTNpMgQgJVhLl2hTFU_7lYbKJAAJ-rjEbPNiBSJFGvLUqu6ZgyQABUZEuAAMBAAMCAAN5AANn9gUAARoE'
+PHOTO_5 = 'AgACAgIAAxkDAAIBdF8QPvjbnwmpwXUxXmL3AUIlE8YpAAJnrjEbPNiBSC4S9kk5zc1Ka_zski4AAwEAAwIAA3kAA2rSAwABGgQ'
+PHOTO_6 = 'AgACAgIAAxkDAAIBdV8QPvlyIi-B0on72v1mbaq2UtH2AAJorjEbPNiBSCHUwW0WJPT2dvHpki4AAwEAAwIAA3kAA_jWAwABGgQ'
+DOWNLOAD_FILE = 'https://disk.yandex.ru/d/brayhegWx5M4mQ'
 
 # логирование
 logging.basicConfig(level=logging.INFO)
@@ -156,10 +163,10 @@ def game(const):
 
     # криминалист, Досье
     s_m('Сосвем забыл скинуть тебе досье. Держи', config.TOKEN_CRIMINALIST)
-    s_m_photo(config.PHOTO_1)  # прикрепляем фото
+    s_m_photo(PHOTO_1)  # прикрепляем фото
     s_m('И также, пока не забыл. У тебя есть личный кабинет, с помощью коорого ты можешь искать улики. '
         'Думаю сам разберёшься')
-    s_m(f'Вот твой id - {get_info("game")["user_id"]}.\nСсылка для скачивания - {config.DOWNLOAD_FILE}')
+    s_m(f'Вот твой id - {get_info("game")["user_id"]}.\nСсылка для скачивания - {DOWNLOAD_FILE}')
 
     sleep(60)  # должно быть 60 = 1мин
 
@@ -414,7 +421,7 @@ def game(const):
 
     sleep(300)  # перед отправкой досье, 300cек = 5мин
     s_m('Досье готово, Держи', config.TOKEN_CRIMINALIST)
-    s_m_photo(config.PHOTO_2)
+    s_m_photo(PHOTO_2)
 
     sleep(120)  # перед отправкой новостей, 120сек = 2 мин
 
@@ -660,7 +667,7 @@ def game(const):
 
     sleep(180)  # 3мин = 180сек
     s_m('Готово, я сделал для тебя досье', config.TOKEN_CRIMINALIST)
-    s_m_photo(config.PHOTO_3)
+    s_m_photo(PHOTO_3)
 
     # новости 3
     sleep(300)  # 5мин = 300сек
@@ -842,7 +849,7 @@ def game(const):
         if wait_answer() == 1:
             sleep(3)
             s_m('Скидываю досье', config.TOKEN_CRIMINALIST)
-            s_m_photo(config.PHOTO_4)
+            s_m_photo(PHOTO_4)
             sleep(10)
             s_m('Детектив, мои люди задержали подозреваемого. Как и говорилось, он был в баре',
                 config.TOKEN_POLICE)
@@ -851,7 +858,7 @@ def game(const):
         if wait_answer() == 1:
             sleep(3)
             s_m('Скидываю досье', config.TOKEN_CRIMINALIST)
-            s_m_photo(config.PHOTO_4)
+            s_m_photo(PHOTO_4)
             sleep(10)
             s_m('Детектив, мои люди задержали подозреваемого. Как и говорилось, он был в баре',
                 config.TOKEN_POLICE)
@@ -892,7 +899,7 @@ def game(const):
 
     # досье
     s_m('Ваше досье, детектив', config.TOKEN_CRIMINALIST)
-    s_m_photo(config.PHOTO_5)
+    s_m_photo(PHOTO_5)
 
     sleep(180)  # 3мин = 180сек
 
@@ -1082,7 +1089,7 @@ def game(const):
 
     # досье
     s_m('Досье для пятого убийства', config.TOKEN_CRIMINALIST)
-    s_m_photo(config.PHOTO_6)
+    s_m_photo(PHOTO_6)
 
     sleep(120)  # 120 = 2мин
 
@@ -1365,7 +1372,6 @@ def game(const):
 def main():
     with open('json/const_game.json', encoding='utf-8') as file:
         data = json.load(file)['Молокова']  # input()
-
 
     game(data)
 
