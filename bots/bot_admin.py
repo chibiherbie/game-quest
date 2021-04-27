@@ -1,5 +1,8 @@
 import json
 from aiogram import Bot, Dispatcher, executor, types
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters.state import StatesGroup, State
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, BotCommand
 from requests import get, post, put, delete
 import logging
@@ -7,10 +10,8 @@ import logging
 import config
 
 bot = Bot(token=config.TOKEN_ADMIN)
-dp = Dispatcher(bot)
-
-# game
-GAME = False
+storage = MemoryStorage()
+dp = Dispatcher(bot, storage=storage)
 
 logging.basicConfig(level=logging.INFO)
 
@@ -25,6 +26,10 @@ inline.add(inline_criminalist, inline_talks)
 inline.add(inline_fortuneteller)
 
 
+class Data(StatesGroup):
+    put_game = State()
+
+
 @dp.message_handler(commands=['get_bot'])
 async def get_bot(message: types.Message):
     await bot.send_message(message.chat.id, 'Названия бота', reply_markup=inline)
@@ -32,9 +37,7 @@ async def get_bot(message: types.Message):
 
 @dp.message_handler(commands=['put_game'])
 async def put_game(message: types.Message):
-    global GAME
-
-    GAME = True
+    await Data.put_game.set()
     await bot.send_message(message.chat.id, 'Напиши время (мин) и уровень (1-5) в формате "<время> <уровень>"\n'
                                             'пример: "4 1"')
 
@@ -58,19 +61,17 @@ async def callback_get_bot(callback_query: types.CallbackQuery):
     await bot.send_message(callback_query.from_user.id, data)
 
 
-@dp.message_handler(content_types=['text'])
-async def said(message: types.Message):
-    global GAME
+@dp.message_handler(state=Data.put_game)
+async def process_name(message: types.Message, state: FSMContext):
+    text = message.text.split()
 
-    if GAME:
-        text = message.text.split()
-        if len(text) == 2 and int(text[0]):
-            data = put(f'{config.URL_B}/game', json={'time': text[0], 'level': text[1]}).json()
-            await bot.send_message(message.chat.id, data)
-        else:
-            await bot.send_message(message.chat.id, "ERROR")
+    if len(text) == 2 and text[0].isdigit() and text[1].isdigit():
+        data = put(f'{config.URL_B}/game', json={'time': text[0], 'level': text[1]}).json()
+        await bot.send_message(message.chat.id, data)
+    else:
+        await bot.send_message(message.chat.id, "ERROR")
 
-    GAME = False
+    await state.finish()
 
 
 async def set_commands(bot: Bot):
