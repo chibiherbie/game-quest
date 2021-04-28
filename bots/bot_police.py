@@ -47,7 +47,7 @@ async def said(message: types.Message):
                         "text": ''})
 
             return
-    await bot.send_message(message.chat.id, choice(police_info[-1]))
+    # await bot.send_message(message.chat.id, choice(police_info[-1]))
 
 
 async def get_start():

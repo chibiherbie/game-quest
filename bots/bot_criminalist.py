@@ -31,7 +31,7 @@ async def said(message: types.Message):
                 "num_block": criminalist_info[num][i][2],
                 "text": ''})
             return
-    await bot.send_message(message.chat.id, choice(criminalist_info[-1]))
+    # await bot.send_message(message.chat.id, choice(criminalist_info[-1]))
 
 
 @dp.message_handler(content_types=['location'])

@@ -8,7 +8,7 @@ def edit_text(text):
     global FILE
 
     if not FILE:
-        with open('json/const_game.json', encoding='utf-8') as file:
+        with open('D:\game-quest\json\const_game.json', encoding='utf-8') as file:
             FILE = json.load(file)['Молокова']
 
     if '~' in text:
