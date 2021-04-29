@@ -1,12 +1,11 @@
 from aiogram import Bot, Dispatcher, executor, types
 import asyncio
-from random import choice
 from requests import get, post
 import logging
 
 import config
 from bots_info.police import police_info
-from text_const import edit_text
+from script.text_const import edit_text
 
 
 bot = Bot(token=config.TOKEN_POLICE)

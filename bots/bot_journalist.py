@@ -1,7 +1,7 @@
 from send_msg import s_m
 import config
 from bots_info.journalist import journalist_info
-from text_const import edit_text
+from script.text_const import edit_text
 
 
 # ----новости----
