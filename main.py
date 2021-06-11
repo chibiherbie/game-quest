@@ -30,32 +30,34 @@ def index():
 
     form = BookingForm()
     if form.validate_on_submit():
-        params['time'] = form.dt_start.const.split()[0]
-        params['date'] = ' '.join(form.dt_start.const.split()[1:])
+        print(form.dt_start.data)
+        params['time'] = form.dt_start.data.split()[0]
+        params['date'] = ' '.join(form.dt_start.data.split()[1:])
 
         # если дата зарегестрирована
-        if db_sess.query(User).filter(User.dt_start == form.dt_start.const).first():
+        if db_sess.query(User).filter(User.dt_start == form.dt_start.data).first():
             params['message'] = ['Дата уже зарегестрирована', 0]
             return render_template('index.html', params=params, form=form)
 
         url = genereta_url()
         user = User(
-            name=form.name.const,
-            email=form.email.const,
-            address=form.address.const,
-            dt_start=form.dt_start.const,
+            name=form.name.data,
+            email=form.email.data,
+            address=form.address.data,
+            dt_start=form.dt_start.data,
             url=url
         )
         db_sess.add(user)
 
-        if send_email(form.email.const, form.name.const, form.dt_start.const,
-                      form.address.const, f'{request.url}game-id/{url}'):
+        if send_email(form.email.data, form.name.data, form.dt_start.data,
+                      form.address.data, f'{request.url}game-id/{url}'):
             db_sess.commit()
 
             # пересоздаём params с обн. данными
             params = create_session(db_sess)
-            params['time'] = form.dt_start.const.split()[0]
-            params['date'] = ' '.join(form.dt_start.const.split()[1:])
+            print(form.dt_start)
+            params['time'] = form.dt_start.data.split()[0]
+            params['date'] = ' '.join(form.dt_start.data.split()[1:])
             params['message'] = ['Вы зарегестрировались. На вашу почту отправлено письмо', 1]
 
             return render_template('index.html', params=params, form=form)
@@ -130,9 +132,9 @@ def create_session(db_sess):
 
 def main():
     db_session.global_init(os.environ.get('DATABASE_URL', 'sqlite:///db/quest.db?check_same_thread=False'))
-    port = int(os.environ.get("PORT", 5000))
-    # app.run()
-    app.run(host='0.0.0.0', port=port)
+    port = int(os.environ.get("PORT", 4000))
+    app.run(port=port)
+    # app.run(host='0.0.0.0', port=port)
 
 
 if __name__ == '__main__':

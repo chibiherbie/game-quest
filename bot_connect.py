@@ -61,7 +61,8 @@ def timer(duration):  # time  минутах
         time = time[0] * 60 + time[1]  # переводим в сек
 
         if time % 60 == 0:  # оповещение для админа
-            s_m_admin('Прошло ' + str(time // 60) + ' мин от ' + str(duration))
+            s_m_admin('Время: ' + str(time // 60) + ' мин от ' + str(duration))
+            sleep(1)
 
         if get_info('bot_connect')['text'] == 'isPosition':
             print('На позиции')
@@ -164,7 +165,7 @@ def game(const):
     # криминалист, Досье
     s_m('Сосвем забыл скинуть тебе досье. Держи', config.TOKEN_CRIMINALIST)
     s_m_photo(PHOTO_1)  # прикрепляем фото
-    s_m('И также, пока не забыл. У тебя есть личный кабинет, с помощью коорого ты можешь искать улики. '
+    s_m('И также, пока не забыл. У тебя есть личный кабинет, с помощью которого ты можешь искать улики. '
         'Думаю сам разберёшься')
     s_m(f'Вот твой id - {get_info("game")["user_id"]}.\nСсылка для скачивания - {DOWNLOAD_FILE}')
 
@@ -819,20 +820,20 @@ def game(const):
     s_m('Есть один человек, торгует наркотой, вот это сделал он. Я у него какое-то время брал дозу,'
         ' но потом закончил...')
     sleep(4)
-    post_info('Bot__help', 0, 'Имя вроде бы Стас, рост под 178-180, тусуется всегда в баре на Молокова. Там найдете')
+    post_info('bot_anonym', 0, 'Имя вроде бы Стас, рост под 178-180, тусуется всегда в баре на Молокова. Там найдете')
 
     if wait_answer() == 0:
-        post_info('Bot__help', 1, 'Я буду мёртв')
+        post_info('bot_anonym', 1, 'Я буду мёртв')
         if wait_answer() == 0:
-            post_info('Bot__help', 2, 'Абсолютно')
+            post_info('bot_anonym', 2, 'Абсолютно')
             wait_answer()
         else:
-            post_info('Bot__help', 2, 'Но я правда хочу Вам помочь')
+            post_info('bot_anonym', 2, 'Но я правда хочу Вам помочь')
             wait_answer()
     else:
-        post_info('Bot__help', 3, 'Абсолютно')
+        post_info('bot_anonym', 3, 'Абсолютно')
         if wait_answer() == 1:
-            post_info('Bot__help', 2, 'Но я правда хочу Вам помочь')
+            post_info('bot_anonym', 2, 'Но я правда хочу Вам помочь')
             wait_answer()
 
     sleep(5)

@@ -39,29 +39,29 @@ def index():
 
 class BotsResource(Resource):
     def get(self, bot):
-        with open('../json/main_connect.json') as f:
+        with open('json/main_connect.json') as f:
             data = json.load(f)
         return jsonify(data[bot])
 
     def post(self, bot):
         args = parser.parse_args()
 
-        with open('../json/main_connect.json') as file:
+        with open('json/main_connect.json') as file:
             data = json.load(file)
 
             data[bot]['isActive'] = args['isActive']
             data[bot]['num_block'] = args["num_block"]
             data[bot]['text'] = args["text"]
 
-        with open('../json/main_connect.json', 'w') as file:
+        with open('json/main_connect.json', 'w') as file:
             json.dump(data, file, ensure_ascii=False, indent=2)
 
     # перезагружаем файл связи
     def delete(self, bot):
-        with open('../json/main_connnect-clear.json') as file:
+        with open('json/main_connnect-clear.json') as file:
             bots = json.load(file)
 
-        with open('../json/main_connect.json', 'w') as file:
+        with open('json/main_connect.json', 'w') as file:
             json.dump(bots, file, ensure_ascii=False, indent=2)
 
 
@@ -69,7 +69,7 @@ class GameResource(Resource):
     def get(self):
         global TIME
 
-        with open('../json/game_connect.json') as f:
+        with open('json/game_connect.json') as f:
             data = json.load(f)
 
         # если запущен таймер
@@ -87,7 +87,7 @@ class GameResource(Resource):
                 data['level'] = 0
                 TIME = 0
 
-            with open('../json/game_connect.json', 'w') as file:
+            with open('json/game_connect.json', 'w') as file:
                 json.dump(data, file, ensure_ascii=False, indent=2)
 
         return jsonify(data)
@@ -95,7 +95,7 @@ class GameResource(Resource):
     def post(self):
         args = parser_game.parse_args()
 
-        with open('../json/game_connect.json') as file:
+        with open('json/game_connect.json') as file:
             data = json.load(file)
 
             data['user_id'] = args['user_id']
@@ -103,7 +103,7 @@ class GameResource(Resource):
             data['level'] = args["level"]
             data['items'] = args["items"]
 
-        with open('../json/game_connect.json', 'w') as file:
+        with open('json/game_connect.json', 'w') as file:
             json.dump(data, file, ensure_ascii=False, indent=2)
 
     def put(self):
@@ -114,7 +114,7 @@ class GameResource(Resource):
         # запоминаем время начала для таймера
         TIME = dt.datetime.now()
 
-        with open('../json/game_connect.json') as file:
+        with open('json/game_connect.json') as file:
             data = json.load(file)
 
             data['time'] = args["time"] * 60
@@ -122,7 +122,7 @@ class GameResource(Resource):
 
         TIME_SEC = data['time']
 
-        with open('../json/game_connect.json', 'w') as file:
+        with open('json/game_connect.json', 'w') as file:
             json.dump(data, file, ensure_ascii=False, indent=2)
 
         return jsonify({"game": "Ок"})

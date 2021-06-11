@@ -3,12 +3,12 @@ import json
 FILE = ''
 
 
-# Ф-ия ищет констаны и меняет их на данные
-def edit_text(text):
+# Ф-ия ищет констаны и меняет их на данные для игры
+def edit_text(text, f='../json/const_game.json'):
     global FILE
 
     if not FILE:
-        with open('/json/const_game.json', encoding='utf-8') as file:
+        with open(f, encoding='utf-8') as file:
             FILE = json.load(file)['Молокова']
 
     if '~' in text:

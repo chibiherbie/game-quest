@@ -18,6 +18,21 @@ num = 0
 logging.basicConfig(level=logging.INFO)
 
 
+@dp.message_handler(commands=['skip_pos'])
+async def process_start_command(message: types.Message):
+    await message.reply("* БЫСТРЫЙ ПРОПУСК ЛОКАЦИИ *")
+
+    markup_remove = types.ReplyKeyboardRemove()
+
+    post(f'{config.URL_B}/bot_connect', json={
+        "isActive": False,
+        "num_block": 0,
+        "text": 'isPosition'})
+
+    await bot.send_message(message.chat.id, 'Так держать, можешь начинать исследовать', reply_markup=markup_remove)
+    return
+
+
 @dp.message_handler(content_types=['text'])
 async def said(message: types.Message):
     for i in range(4):
