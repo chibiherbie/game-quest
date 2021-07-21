@@ -37,7 +37,7 @@ def s_m_pos(msg, token_id=''):
         bot = Bot(token=token_id)
 
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)  # создание клавиатуры
-    markup.add(types.KeyboardButton('Отправить свою гео', request_location=True))
+    markup.add(types.KeyboardButton('Отправить гео', request_location=True))
 
     send = asyncio.get_event_loop()
     send.run_until_complete(send_bot_pos(msg, markup))

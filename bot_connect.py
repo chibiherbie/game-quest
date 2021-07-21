@@ -165,9 +165,9 @@ def game(const):
     # криминалист, Досье
     s_m('Сосвем забыл скинуть тебе досье. Держи', config.TOKEN_CRIMINALIST)
     s_m_photo(PHOTO_1)  # прикрепляем фото
-    s_m('И также, пока не забыл. У тебя есть личный кабинет, с помощью которого ты можешь искать улики. '
-        'Думаю сам разберёшься')
-    s_m(f'Вот твой id - {get_info("game")["user_id"]}.\nСсылка для скачивания - {DOWNLOAD_FILE}')
+    # s_m('И также, пока не забыл. У тебя есть личный кабинет, с помощью которого ты можешь искать улики. '
+    #     'Думаю сам разберёшься')
+    # s_m(f'Вот твой id - {get_info("game")["user_id"]}.\nСсылка для скачивания - {DOWNLOAD_FILE}')
 
     sleep(60)  # должно быть 60 = 1мин
 
@@ -411,7 +411,8 @@ def game(const):
         ' причина смерти: самоубийство, '
         'застрелился, пуля прошла навылет с правой стороны висков')
     sleep(1)
-    post_info(f'bot_police', 8, f'Время смерти: {dt.date.today().strftime("%d.%m.%Y")}, 11:30')
+    post_info(f'bot_police', 8, f'Время смерти: {dt.date.today().strftime("%d.%m.%Y")},'
+                                f' {(dt.datetime.now() - dt.timedelta(minutes=5)).strftime("%H:%M")}')
 
     time_relationships = wait_answer()
     relationships_bot_police += time_relationships
@@ -661,7 +662,8 @@ def game(const):
     s_m('Убита женщина 39 лет, тело найдено возле дома, в районе Батурина Предположительная причина смерти:'
         ' случайно выпала из окна во время мойки окна. Перелом 80% костей, травмы, несовместимые с жизнью.')
     sleep(2)
-    s_m(f'Время смерти: {dt.date.today().strftime("%d.%m.%Y")}, 14:00')
+    s_m(f'Время смерти: {dt.date.today().strftime("%d.%m.%Y")},'
+        f' {(dt.datetime.now() - dt.timedelta(minutes=2)).strftime("%H:%M")}')
     sleep(4)
     s_m(f'Без вяских разговоров выдвигайся по адресу улица {const["point_3"]}.'
         f' У нас не так много времени, всего {const["time_3"]} мин')
@@ -890,7 +892,8 @@ def game(const):
     s_m('Убита юная девушка 19 лет в районе Весны города Красноярска. '
         'Предположительная причина смерти: асфиксия дыхательных путей.')
     sleep(1)
-    s_m(f'Время смерти: {dt.date.today().strftime("%d.%m.%Y")}, 17:30')
+    s_m(f'Время смерти: {dt.date.today().strftime("%d.%m.%Y")}, '
+        f'{(dt.datetime.now() - dt.timedelta(minutes=10)).strftime("%H:%M")}')
     sleep(3)
     s_m(f'Вам надо срочно выезжать на улица {const["point_4"]}. У нас как всегда нет много времени.'
         ' Вам также скоро скинут досье на жертву',
@@ -957,7 +960,7 @@ def game(const):
                     post_info('bot_talks', 66, 'Она ведь уже далеко не маленькая девочка. Больше ничего такого')
                     wait_answer()
                 else:
-                    post_info('bot_talks', 66, 'Всё, больше не знаю')
+                    post_info('bot_talks', 66, 'Неа, больше ничего не знаю')
                     wait_answer()
 
             else:
@@ -1014,13 +1017,13 @@ def game(const):
 
     time_relationships = wait_answer()
     if time_relationships == 1:
-        s_m('Алиби: Мне так сложно говорить, простите. Я была на работе,'
-            ' проверяла наличие товара на складе, работала с самого утра')
+        s_m('Алиби: "Мне так сложно говорить, простите. Я была на работе,'
+            ' проверяла наличие товара на складе, работала с самого утра"')
         suspect.append('Тётя')
     elif time_relationships == 2:
-        s_m('Подругу выбрал... Хорошо, мы задержим её\nАлиби: Я её любила даже больше, чем просто подругу. Она была '
+        s_m('Подругу выбрал... Хорошо, мы задержим её\nАлиби: "Я её любила даже больше, чем просто подругу. Она была '
             'мне гораздо ближе, это была какая-то любовь. Но я её не убивала, клянусь. '
-            'Я была в спортзале с 4х часов, в течение двух часов')
+            'Я была в спортзале с 4х часов, в течение двух часов"')
         suspect.append('Подруга, Алиса')
     else:
         s_m('Мне кажется, ты сделал правильный выбор. Молодец')
@@ -1055,7 +1058,7 @@ def game(const):
     count = wait_answer()
     if count == 0:
         s_m('Не могу рассказать всё, иначе сама буду в опасности, но могу сказать точно, что это не тот,'
-            ' кого вы подозреваете')
+            ' кого вам подсказали')
         post_info('bot_fortuneteller', 5, 'Это всё')
         wait_answer()
     else:
@@ -1081,9 +1084,10 @@ def game(const):
     s_m(f'Убит мужчина 27 лет в собственной квартире, в районе {const["zone_5"]} Предположительная причина смерти:'
         ' передозировка инсулином.')
     sleep(1)
-    s_m(f'Время смерти: {dt.date.today().strftime("%d.%m.%Y")}, 19:00')
+    s_m(f'Время смерти: {dt.date.today().strftime("%d.%m.%Y")}, '
+        f'{(dt.datetime.now() - dt.timedelta(minutes=1)).strftime("%H:%M")}')
     sleep(2)
-    s_m('Выдвигайся к 149 школе на спортивную площадку')
+    s_m(f'Выдвигайся к {const["point_5"]}')
     s_m(f'На этот раз у нас {const["time_5"]} мин')
 
     sleep(60)  # 50сек = 1мин
@@ -1331,7 +1335,7 @@ def game(const):
                 ' Имеет хорошее химическое образование, победитель многих олимпиад по химии и органике.')
 
     sleep(10)
-    s_m('Это всё. Сделай правильный выбор')
+    s_m('Это всё. Сделай правильный выбор. У тебя есть время подумать')
 
     sleep(180)  # 3 мин = 180 сек
 
@@ -1341,7 +1345,11 @@ def game(const):
 
     # концовка
     s_m_admin('концовка')
-    s_m('Напиши, кто по твоему убийца?', config.TOKEN_POLICE)
+    s_m('Напиши, кто по твоему убийца? Пиши имя также, как тебе писал Криминалист!', config.TOKEN_POLICE)
+
+    get_g = get(f'{config.URL_B}/game').json()
+    get_g['items'] = [suspect]
+    post(f'{config.URL_B}/game', json=get_g)
 
     if wait_answer() == 1:
         for i in range(3):
@@ -1349,7 +1357,7 @@ def game(const):
             s_m('XXX', config.TOKEN_CRIMINALIST)
             s_m('XXX', config.TOKEN_ANONYM)
             s_m('XXX', config.TOKEN_FORTUNETELLER)
-            s_m('XXX', config.TOKEN_ADMIN)
+            s_m('XXX', config.TOKEN_TALKS)
             s_m('XXX', config.TOKEN_JOURNALIST)
             sleep(1)
         sleep(10)
@@ -1361,7 +1369,7 @@ def game(const):
             s_m('XXX', config.TOKEN_CRIMINALIST)
             s_m('XXX', config.TOKEN_ANONYM)
             s_m('XXX', config.TOKEN_FORTUNETELLER)
-            s_m('XXX', config.TOKEN_ADMIN)
+            s_m('XXX', config.TOKEN_TALKS)
             s_m('XXX', config.TOKEN_JOURNALIST)
             sleep(1)
         sleep(10)

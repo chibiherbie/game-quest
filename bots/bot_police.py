@@ -33,8 +33,8 @@ async def said(message: types.Message):
 
         # концовка
         elif num == 26:
-            if message.text in '':
-                if message.text == 1:
+            if message.text in get(f'{config.URL_B}/game').json()['items']:
+                if message.text == 'Друг, Илья':
                     post(f'{config.URL_B}/bot_connect', json={
                         "isActive": True,
                         "num_block": 1,
@@ -45,7 +45,7 @@ async def said(message: types.Message):
                         "num_block": 0,
                         "text": ''})
 
-            return
+            return None
     # await bot.send_message(message.chat.id, choice(police_info[-1]))
 
 
