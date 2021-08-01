@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import Flask, render_template, redirect, request
 from _data import db_session
 from forms.user import BookingForm
@@ -8,15 +9,19 @@ import locale
 from random import choice
 from mail_sender import send_email, send_email_admin
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+application = Flask(__name__)
+application.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 locale.setlocale(locale.LC_ALL, "ru_RU.utf8")  # задаем локально для вывода даты на русском
 
 TIME = ['10:00', '11:30', '13:00', '14:30', '16:00', '17:30', '19:00']  # время закрытия игр
 
 
-@app.route("/", methods=['GET', 'POST'])
+# @application.route("/")
+# def hello():
+#    return render_template('soon.html')
+
+@application.route("/", methods=['GET', 'POST'])
 def index():
     db_sess = db_session.create_session()
 
@@ -27,10 +32,11 @@ def index():
 
     # формируем данные - params
     params = create_session(db_sess)
-
+    print(os.getenv('FROM'))
     form = BookingForm()
     if form.validate_on_submit():
         print(form.dt_start.data)
+
         params['time'] = form.dt_start.data.split()[0]
         params['date'] = ' '.join(form.dt_start.data.split()[1:])
 
@@ -67,7 +73,7 @@ def index():
     return render_template('index.html', params=params, form=form)
 
 
-@app.route("/game-id/<url>", methods=['GET', 'POST'])
+@application.route("/game-id/<url>", methods=['GET', 'POST'])
 def game_url(url):
     db_sess = db_session.create_session()
 
@@ -121,7 +127,7 @@ def del_time(time, db_sess):
 def create_session(db_sess):
     params = {}
     params['now_date'] = dt.date.today().strftime("%d %B")
-    params['week_date'] = (dt.date.today() + dt.timedelta(weeks=1)).strftime("%d %B")
+    params['week_date'] = (dt.date.today() + dt.timedelta(days=6)).strftime("%d %B")
     params['days'] = [(dt.date.today() + dt.timedelta(days=i)).strftime('%d %B %A').split() for i in range(7)]
     params['booking'] = [i[0] for i in db_sess.query(User.dt_start).all()]
     params['message'] = ['', 0]
@@ -131,10 +137,9 @@ def create_session(db_sess):
 
 
 def main():
-    db_session.global_init(os.environ.get('DATABASE_URL', 'sqlite:///db/quest.db?check_same_thread=False'))
-    port = int(os.environ.get("PORT", 4000))
-    app.run(port=port)
-    # app.run(host='0.0.0.0', port=port)
+    db_session.global_init('mysql://u1435216_default:x1tj5gYFe79pMH8E@server211.hosting.reg.ru/u1435216_default?charset=utf8')
+    # application.run()
+    application.run(host='0.0.0.0', debug=True)
 
 
 if __name__ == '__main__':

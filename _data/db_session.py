@@ -8,6 +8,10 @@ SqlAlchemyBase = dec.declarative_base()
 __factory = None
 
 
+def test_init(db):
+    sa.create_engine(db)
+
+
 def global_init(db_file):
     global __factory
 
@@ -20,7 +24,7 @@ def global_init(db_file):
     conn_str = f'{db_file.strip()}'
     print(f"Подключение к базе данных по адресу {conn_str}")
 
-    engine = sa.create_engine(conn_str, echo=False)
+    engine = sa.create_engine(conn_str, echo=False, encoding='utf8')
     __factory = orm.sessionmaker(bind=engine)
 
     from . import __all_models
