@@ -1,0 +1,89 @@
+2021-08-02 13:16:38,849 INFO: Microblog startup [in D:\quest\game-quest\main.py:166]
+2021-08-02 13:16:55,968 INFO: Microblog startup [in D:\quest\game-quest\main.py:166]
+2021-08-02 13:16:57,248 ERROR: Exception on / [GET] [in D:\1_TEST\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "D:\1_TEST\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\1_TEST\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\1_TEST\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\1_TEST\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "D:\quest\game-quest\main.py", line 43, in index
+    del_time(i, db_sess)
+  File "D:\quest\game-quest\main.py", line 125, in del_time
+    if not db_sess.query(User).filter(User.dt_start == now).first():
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\orm\query.py", line 2763, in first
+    return self.limit(1)._iter().first()
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\orm\query.py", line 2847, in _iter
+    result = self.session.execute(
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\orm\session.py", line 1689, in execute
+    result = conn._execute_20(statement, params or {}, execution_options)
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\engine\base.py", line 1583, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\sql\elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\engine\base.py", line 1452, in _execute_clauseelement
+    ret = self._execute_context(
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\engine\base.py", line 1814, in _execute_context
+    self._handle_dbapi_exception(
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\engine\base.py", line 1999, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\util\compat.py", line 207, in raise_
+    raise exception
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\engine\base.py", line 1771, in _execute_context
+    self.dialect.do_execute(
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+  File "D:\1_TEST\lib\site-packages\MySQLdb\cursors.py", line 199, in execute
+    args = tuple(map(db.literal, args))
+  File "D:\1_TEST\lib\site-packages\MySQLdb\connections.py", line 280, in literal
+    s = self.string_literal(o.encode(self.encoding))
+  File "C:\Users\bekke_lx\AppData\Local\Programs\Python\Python39\lib\encodings\cp1252.py", line 12, in encode
+    return codecs.charmap_encode(input,errors,encoding_table)
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 9-14: character maps to <undefined>
+2021-08-02 13:17:08,610 ERROR: Exception on / [GET] [in D:\1_TEST\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "D:\1_TEST\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\1_TEST\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\1_TEST\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\1_TEST\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "D:\quest\game-quest\main.py", line 43, in index
+    del_time(i, db_sess)
+  File "D:\quest\game-quest\main.py", line 125, in del_time
+    if not db_sess.query(User).filter(User.dt_start == now).first():
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\orm\query.py", line 2763, in first
+    return self.limit(1)._iter().first()
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\orm\query.py", line 2847, in _iter
+    result = self.session.execute(
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\orm\session.py", line 1689, in execute
+    result = conn._execute_20(statement, params or {}, execution_options)
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\engine\base.py", line 1583, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\sql\elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\engine\base.py", line 1452, in _execute_clauseelement
+    ret = self._execute_context(
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\engine\base.py", line 1814, in _execute_context
+    self._handle_dbapi_exception(
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\engine\base.py", line 1999, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\util\compat.py", line 207, in raise_
+    raise exception
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\engine\base.py", line 1771, in _execute_context
+    self.dialect.do_execute(
+  File "D:\1_TEST\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+  File "D:\1_TEST\lib\site-packages\MySQLdb\cursors.py", line 199, in execute
+    args = tuple(map(db.literal, args))
+  File "D:\1_TEST\lib\site-packages\MySQLdb\connections.py", line 280, in literal
+    s = self.string_literal(o.encode(self.encoding))
+  File "C:\Users\bekke_lx\AppData\Local\Programs\Python\Python39\lib\encodings\cp1252.py", line 12, in encode
+    return codecs.charmap_encode(input,errors,encoding_table)
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 9-14: character maps to <undefined>
+2021-08-02 13:47:57,954 INFO: Microblog startup [in D:\quest\game-quest\main.py:163]

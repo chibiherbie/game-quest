@@ -3,11 +3,17 @@ from flask import Flask, render_template, redirect, request
 from _data import db_session
 from forms.user import BookingForm
 from _data.users import User
+from random import choice
+from mail_sender import send_email, send_email_admin
+from dotenv import load_dotenv
 import os
 import datetime as dt
 import locale
-from random import choice
-from mail_sender import send_email, send_email_admin
+import logging
+from logging.handlers import RotatingFileHandler
+
+
+load_dotenv()
 
 application = Flask(__name__)
 application.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -20,6 +26,12 @@ TIME = ['10:00', '11:30', '13:00', '14:30', '16:00', '17:30', '19:00']  # вре
 # @application.route("/")
 # def hello():
 #    return render_template('soon.html')
+
+
+@application.errorhandler(500)
+def internal_error(error):
+    return render_template('soon.html', error=error)
+
 
 @application.route("/", methods=['GET', 'POST'])
 def index():
@@ -136,10 +148,25 @@ def create_session(db_sess):
     return params
 
 
+def debug_on():
+    if not application.debug:
+        if not os.path.exists('logs'):
+            os.mkdir('logs')
+        file_handler = RotatingFileHandler('logs/microblog.log', maxBytes=10240,
+                                           backupCount=10)
+        file_handler.setFormatter(logging.Formatter(
+            '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+        file_handler.setLevel(logging.INFO)
+        application.logger.addHandler(file_handler)
+
+        application.logger.setLevel(logging.INFO)
+        application.logger.info('Microblog startup')
+
+
 def main():
     db_session.global_init(os.getenv('DATABASE_URL'))
-    # application.run()
-    application.run(host='0.0.0.0', debug=True)
+    # debug_on()
+    application.run(host='0.0.0.0', debug=False)
 
 
 if __name__ == '__main__':
