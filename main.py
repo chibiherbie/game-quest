@@ -56,7 +56,7 @@ def index():
         db_sess.add(user)
 
         if send_email(form.email.data, form.name.data, form.dt_start.data,
-                      form.address.data, f'{request.url}game-id/{url}'):
+                      form.address.data, f"{request.url}game-id/{url}"):
             db_sess.commit()
 
             # пересоздаём params с обн. данными
@@ -137,7 +137,7 @@ def create_session(db_sess):
 
 
 def main():
-    db_session.global_init('mysql://u1435216_default:x1tj5gYFe79pMH8E@server211.hosting.reg.ru/u1435216_default?charset=utf8')
+    db_session.global_init(os.getenv('DATABASE_URL'))
     # application.run()
     application.run(host='0.0.0.0', debug=True)
 
